@@ -1,0 +1,1 @@
+Letterboxd clone using Node.js, Angular, MySQL and MovieDB API
