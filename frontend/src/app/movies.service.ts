@@ -24,6 +24,11 @@ export class MovieService {
     getPosterUrl(posterPath: string): string {
     return this.defaultPosterAddress + posterPath;
     }
+
+    getMovieDetails(movieId: string): Observable<any> {
+        const url = `${this.baseUrl}/movies/${movieId}`;
+        return this.http.get<any>(url);
+      }
     
 
 }

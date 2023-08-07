@@ -23,8 +23,8 @@ router.post('/login', async (req, res) => {
   }
 
   try {
-    const user = { userId: user[0].id, username: user[0].username };
-    const token = jwt.sign(user, config.secretKey, { expiresIn: '1h' });
+    const tokenUser = { userId: user[0][0].id, username: user[0][0].username };
+    const token = jwt.sign(tokenUser, config.secretKey, { expiresIn: '1h' });
     return res.status(200).json({ token });
   } catch (error) {
     console.error('Error logging in:', error);

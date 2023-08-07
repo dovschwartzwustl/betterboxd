@@ -5,12 +5,14 @@ import { UserLoginComponent } from './user-login/user-login.component';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
 import { AuthGuard } from './auth.guard';
 import { ProfileComponent } from './profile/profile.component';
+import { MovieDetailsComponent } from './movie-details/movie-details.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, title: "Home"},
   { path: 'login', component: UserLoginComponent, title: "Login", canActivate: [AuthGuard]},
   { path: 'register', component: UserRegistrationComponent, title: "Register", canActivate: [AuthGuard] },
-  { path: 'profile', component: ProfileComponent, title: "Profile"}
+  { path: 'profile', component: ProfileComponent, title: "Profile"},
+  { path: 'movie/:id', component: MovieDetailsComponent }
 ];
 
 @NgModule({
