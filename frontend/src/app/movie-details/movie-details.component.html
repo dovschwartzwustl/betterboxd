@@ -1,15 +1,26 @@
 <div *ngIf="movie">
     
     <img class = "movie-poster" [src]="getPosterUrl(movie.poster_path)">
-    <!-- 
-    <button *ngIf="!isWatched(movie)" (click)="markAsWatched(movie)">Watch</button>
+    
+    <ng-container *ngIf="isLoggedIn | async; else showLoginButton">
+    <button *ngIf="!isWatched(movie)" (click)="markMovieAsWatched(movie)">Watch</button>
     <div *ngIf="isWatched(movie)">
+      <button>Watched</button>
+  <!--
       <p>Your Rating:</p>
       <select [(ngModel)]="movie.rating" (change)="updateRating(movie)">
         <option *ngFor="let rating of ratings" [value]="rating">{{ rating }}</option>
       </select>
-    </div>  
-    -->
+        -->
+    </div>
+
+  </ng-container>
+
+  <ng-template #showLoginButton>
+    <a [routerLink]="['/login']"><button>Login to Rate</button></a>
+  </ng-template>
+ 
+    
     
     <h2>{{ movie.title }}</h2>
     <p>Release Date: {{ movie.release_date }}</p>

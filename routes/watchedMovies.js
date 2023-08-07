@@ -26,7 +26,7 @@ router.post('/watched', async (req, res) => {
 });
 
 // Route to check if a movie is watched by a user
-router.get('/movies/:movieId/watched/:userId', async (req, res) => {
+router.get('/movies//watched/:movieId/:userId', async (req, res) => {
   const { movieId, userId } = req.params;
 
   try {

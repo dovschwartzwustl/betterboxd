@@ -53,4 +53,13 @@ export class AuthService {
   getDecodedToken(token: string): any {
     return this.jwtHelper.decodeToken(token);
   }
+
+  getUserIdFromToken(): number {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      const decodedToken: any = this.jwtHelper.decodeToken(token);
+      return decodedToken.userId;
+    }
+    throw new Error('User ID not found in token');
+  }
 }

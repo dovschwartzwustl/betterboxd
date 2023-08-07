@@ -11,6 +11,7 @@ import { Movie } from './movie';
 export class MovieService {
     
     private baseUrl = 'http://localhost:3000/api/movies';
+    private baseWatchedUrl = 'http://localhost:3000/api/watched';
     private defaultPosterAddress = 'https://image.tmdb.org/t/p/original';
 
     constructor(private http: HttpClient) {}
@@ -37,11 +38,27 @@ export class MovieService {
       );;
     }
 
+    createWatchedMovieEntry(movieId: number, userId: number, rating?: number): Observable<any> {
+      const payload = {
+        movieId,
+        userId,
+        rating
+      };
+  
+      return this.http.post(`${this.baseWatchedUrl}`, payload);
+    }
+
+    isMovieWatched(movieId: number, userId: number): Observable<boolean> {
+      return this.http.get<boolean>(`http://localhost:3000/api/movies/watched/${movieId}/${userId}`);
+    }
+    
+
+
     //getWatchedList
 
     //isWatched
 
-    //createWatchedMovieEntry
+   
 
     //updateRating
     
