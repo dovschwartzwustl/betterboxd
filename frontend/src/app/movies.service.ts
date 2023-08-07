@@ -26,9 +26,16 @@ export class MovieService {
     }
 
     getMovieDetails(movieId: string): Observable<any> {
-        const url = `${this.baseUrl}/${movieId}`;
+        const url = `${this.baseUrl}/details/${movieId}`;
         return this.http.get<any>(url);
       }
+
+    getSearchResults(query: string): Observable<Movie[]> {
+      const url = `${this.baseUrl}/search/${query}`;
+      return this.http.get<any>(url).pipe(
+        map(response => response.results)
+      );;
+    }
     
 
 }

@@ -1,4 +1,5 @@
 <div *ngIf="movie">
+    <img class = "movie-poster" [src]="getPosterUrl(movie.poster_path)">
     <h2>{{ movie.title }}</h2>
     <p>Release Date: {{ movie.release_date }}</p>
     <p>Overview: {{ movie.overview }}</p>

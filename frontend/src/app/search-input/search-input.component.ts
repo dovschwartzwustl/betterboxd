@@ -11,5 +11,5 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./search-input.component.scss']
 })
 export class SearchInputComponent {
-  searchQuery: string = '';
+  query: string = '';
 }

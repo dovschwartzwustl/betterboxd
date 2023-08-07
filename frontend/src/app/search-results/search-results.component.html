@@ -1,1 +1,6 @@
-<h1>Search Results</h1>
+<h1>Search Results for {{query}}</h1>
+<section class="results">
+    <a *ngFor="let movie of searchResults" [routerLink]="['/movie', movie.id]">
+      <app-movie [movie]="movie"></app-movie>
+    </a>
+  </section>
