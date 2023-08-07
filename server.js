@@ -14,30 +14,22 @@ app.use(bodyParser.json());
 app.use(cors());
 
 
-app.get('/api/movies', (req, res) => {
 
-  const url = 'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1';
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjY2ViNDliNGM5MGJlNGE1MjhiMmIxMzQ3MmZlOTlmYiIsInN1YiI6IjY0YzkyYzliOGRlMGFlMDBlNDg3NTc3YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.nIvo9JVIRGv1328ddTF9dDut63qm4BUaVQTUqlwL2T4'
-    }
-  };
+// Import and use the user registration route
+const registerRoute = require('./routes/register');
+app.use('/api', registerRoute);
 
-  fetch(url, options)
-    .then(res => res.json())
-    .then(json => console.log(json))
-    .catch(err => console.error('error:' + err));
-});
+// Import and use the user login route
+const loginRoute = require('./routes/login');
+app.use('/api', loginRoute);
+
+// Import and use the movie route
+const movieRoute = require('./routes/movies');
+app.use('/api', movieRoute); 
+
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
 
-/*
-const moviesRoute = require('./routes/movies');
 
-// Use the movies route
-app.use('/api', moviesRoute);
-*/

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { Movie } from './movie';
 
 @Injectable({
     providedIn: 'root'
@@ -10,12 +11,18 @@ import { catchError, retry } from 'rxjs/operators';
 export class MovieService {
     
     private baseUrl = 'http://localhost:3000/api/movies';
+    private defaultPosterAddress = 'https://image.tmdb.org/t/p/original';
 
     constructor(private http: HttpClient) {}
         
-        getMovies(): Observable<any[]> {
-        return this.http.get<any[]>(this.baseUrl);
-        
+    getMovies(): Observable<Movie[]> {
+        return this.http.get<any>(this.baseUrl).pipe(
+          map(response => response.results) // Parse the 'results' array from the API response
+        );
+    }
+
+    getPosterUrl(posterPath: string): string {
+    return this.defaultPosterAddress + posterPath;
     }
     
 

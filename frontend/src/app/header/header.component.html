@@ -1,1 +1,14 @@
-<h1>BetterBoxd</h1>
+<nav>
+  <a [routerLink]="['/']"><h1>BetterBoxd</h1></a>
+  <div>
+    <ng-container *ngIf="isLoggedIn$ | async; else showLoginButton">
+      
+      <a [routerLink]="['/profile']"><button>Profile</button></a>
+      <button (click)="logout()" [routerLink]="['/']">Logout</button>
+    </ng-container>
+    <ng-template #showLoginButton>
+      <!-- Show login button if the user is not logged in -->
+      <a [routerLink]="['/login']"><button>Login</button></a>
+    </ng-template>
+  </div>
+</nav>
