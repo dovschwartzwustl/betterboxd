@@ -24,8 +24,10 @@ app.use('/api', loginRoute);
 
 // Import and use the movie route
 const movieRoute = require('./routes/movies');
-app.use('/api', movieRoute); 
+app.use('/api', movieRoute);
 
+const watchedMoviesRoute = require('./routes/watchedMovies');
+app.use('/api', watchedMoviesRoute);
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

@@ -69,4 +69,8 @@ router.get('/movies', fetchPopularMovies);
 router.get('/movies/details/:id', fetchMovieDetails);
 router.get('/movies/search/:query', fetchMovieSearchResults);
 
+//is movie watched by user
+
+//what movies has the user watched
+
 module.exports = router;

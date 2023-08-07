@@ -33,9 +33,17 @@ export class MovieDetailsComponent implements OnInit {
         });
       }
     });
+
+
+    //check if the movie has been watched by the user or not if the user is logged in
+    //isWatched
+
   }
 
   getPosterUrl(posterPath: string): string {
     return this.MovieService.getPosterUrl(posterPath);
   }
+
+
+  //markAsWatched
 }
