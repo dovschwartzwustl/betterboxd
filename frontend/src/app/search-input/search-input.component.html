@@ -1,0 +1,4 @@
+<form>
+    <input type="text" [(ngModel)]="searchQuery" placeholder="Find a movie">   
+    <a [routerLink]="['/search', searchQuery]"><button class="primary" type="button" >Search</button></a>
+  </form>

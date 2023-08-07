@@ -6,12 +6,14 @@ import { UserRegistrationComponent } from './user-registration/user-registration
 import { AuthGuard } from './auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, title: "Home"},
   { path: 'login', component: UserLoginComponent, title: "Login", canActivate: [AuthGuard]},
   { path: 'register', component: UserRegistrationComponent, title: "Register", canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, title: "Profile"},
+  { path: 'search/:query', component: SearchResultsComponent, title: "Search Results"},
   { path: 'movie/:id', component: MovieDetailsComponent }
 ];
 

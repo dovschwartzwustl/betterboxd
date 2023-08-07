@@ -15,7 +15,6 @@ async function fetchPopularMovies(req, res) {
   try {
     const response = await fetch(url, options);
     const movies = await response.json();
-    console.log(movies);
     return res.json(movies);
   } catch (error) {
     console.error('Error fetching movies:', error);
@@ -36,9 +35,9 @@ async function fetchMovieDetails(req, res) {
 
   try {
     const response = await fetch(url, options);
-    const movies = await response.json();
-    console.log(movies);
-    return res.json(movies);
+    const movie = await response.json();
+    console.log(movie);
+    return res.json(movie);
   } catch (error) {
     console.error('Error fetching movie:', error);
     return res.status(500).json({ message: 'Internal server error' });
@@ -46,6 +45,6 @@ async function fetchMovieDetails(req, res) {
 }
 
 router.get('/movies', fetchPopularMovies);
-router.get('/:id', fetchMovieDetails);
+router.get('/movies/:id', fetchMovieDetails);
 
 module.exports = router;

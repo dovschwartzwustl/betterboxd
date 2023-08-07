@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MovieService } from '../movies.service';
 import { MovieComponent } from '../movie/movie.component';
+import { SearchInputComponent } from '../search-input/search-input.component';
 import { Movie } from '../movie';
+import { RouterModule } from '@angular/router';
+
 
 interface ApiResponse {
   page: number;
@@ -12,7 +15,7 @@ interface ApiResponse {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, MovieComponent],
+  imports: [CommonModule, RouterModule, MovieComponent, SearchInputComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })

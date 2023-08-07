@@ -26,7 +26,7 @@ export class MovieService {
     }
 
     getMovieDetails(movieId: string): Observable<any> {
-        const url = `${this.baseUrl}/movies/${movieId}`;
+        const url = `${this.baseUrl}/${movieId}`;
         return this.http.get<any>(url);
       }
     

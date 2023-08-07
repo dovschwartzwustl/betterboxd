@@ -1,9 +1,9 @@
 <section>
-    <form>   
-      <button class="primary" type="button" (click)="fetchMovies()">Search</button>
-    </form>
+    <app-search-input></app-search-input>
   </section>
   <h1>Popular Now</h1>
   <section class="results">
-    <app-movie *ngFor="let movie of movies" [movie]="movie"></app-movie>
+    <a *ngFor="let movie of movies" [routerLink]="['/movie', movie.id]">
+      <app-movie [movie]="movie"></app-movie>
+    </a>
   </section>
