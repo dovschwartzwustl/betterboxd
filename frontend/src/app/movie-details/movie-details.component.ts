@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../movies.service';
 import { AuthService } from '../auth.service';
 import { Movie } from '../movie';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { of,Observable, Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-movie-details',
@@ -16,11 +18,19 @@ import { RouterModule } from '@angular/router';
 
 export class MovieDetailsComponent implements OnInit {
   movieId: string | null = null;
+  rating: number | undefined = undefined;
   movie: Movie | undefined;
-  isLoggedIn = false;
-  isMovieWatched = false;
+  isLoggedIn$: Observable<boolean>;
+  isMovieWatched: boolean = false;
 
-  constructor(private route: ActivatedRoute, private MovieService: MovieService, private AuthService: AuthService) {}
+  private isLoggedInSubscription: Subscription | undefined;
+
+  
+
+  constructor(private route: ActivatedRoute, private MovieService: MovieService, private AuthService: AuthService) {
+    this.isLoggedIn$ = this.AuthService.isLoggedIn();
+
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -39,33 +49,62 @@ export class MovieDetailsComponent implements OnInit {
     });
 
     // Check if user is logged in
-    this.AuthService.isLoggedIn().subscribe(loggedIn => {
-      this.isLoggedIn = loggedIn;
-
+    this.isLoggedInSubscription = this.AuthService.isLoggedIn().subscribe(loggedIn => {
       if (loggedIn) {
         // Get user ID from token
         const userId = this.AuthService.getUserIdFromToken();
-
+    
         // Check if movie is watched by the user
-        this.MovieService.isMovieWatched(+this.movieId!, userId).subscribe(watched => {
-          this.isMovieWatched = watched;
+        //SYNC UP THE BOOLEAN VALUES TO WORK PROPERLY
+        this.MovieService.isMovieWatched(+this.movieId!, userId).subscribe(response => {
+          this.isMovieWatched = response;
         });
       }
     });
+    
   }
 
-  markMovieAsWatched(movieId: number, rating?: number) {
+  ngOnDestroy(): void {
+    // Unsubscribe from isLoggedIn$ to avoid memory leaks
+    this.isLoggedInSubscription?.unsubscribe();
+  }
+
+  markMovieAsWatched() {
+    console.log("marking as watched");
     const userId = this.AuthService.getUserIdFromToken();
 
-    this.MovieService.createWatchedMovieEntry(movieId, userId, rating).subscribe({
+    if (this.movieId !== null) {
+      const parsedMovieId = parseInt(this.movieId, 10); // Convert to integer
+      // You can also use: const parsedMovieId = Number(this.movieId);
+
+      this.MovieService.createWatchedMovieEntry(parsedMovieId, userId, this.rating).subscribe({
+        next: response => {
+          this.isMovieWatched = true;
+          console.log('Watched movie entry created:', response);
+        },
+        error: error => {
+          console.error('Error creating watched movie entry:', error);
+        }
+      });
+    } else {
+      console.error('movieId is null');
+    }
+}
+
+  unmarkMovieAsWatched() {
+    const userId = this.AuthService.getUserIdFromToken();
+
+    this.MovieService.markMovieAsUnwatched(+this.movieId!, userId).subscribe({
       next: response => {
-        console.log('Watched movie entry created:', response);
+        console.log('Movie marked as unwatched:', response);
+        this.isMovieWatched = false;
       },
       error: error => {
-        console.error('Error creating watched movie entry:', error);
+        console.error('Error marking movie as unwatched:', error);
       }
     });
   }
+
 
 
   getPosterUrl(posterPath: string): string {

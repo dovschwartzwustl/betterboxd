@@ -46,8 +46,11 @@ export class AuthService {
   }
 
   isLoggedIn(): Observable<boolean> {
-    
-    return this.isLoggedInSubject.asObservable();
+    return this.isLoggedInSubject.asObservable().pipe(
+      tap(loggedIn => {
+        console.log('Logged in?', loggedIn);
+      })
+    );
   }
 
   getDecodedToken(token: string): any {
@@ -57,9 +60,11 @@ export class AuthService {
   getUserIdFromToken(): number {
     const token = localStorage.getItem('authToken');
     if (token) {
+      
       const decodedToken: any = this.jwtHelper.decodeToken(token);
+      console.log(decodedToken.userId)
       return decodedToken.userId;
-    }
-    throw new Error('User ID not found in token');
+    } 
+    throw new Error("no user id")
   }
 }

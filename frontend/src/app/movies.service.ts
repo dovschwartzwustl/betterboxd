@@ -48,9 +48,18 @@ export class MovieService {
       return this.http.post(`${this.baseWatchedUrl}`, payload);
     }
 
-    isMovieWatched(movieId: number, userId: number): Observable<boolean> {
-      return this.http.get<boolean>(`http://localhost:3000/api/movies/watched/${movieId}/${userId}`);
+    markMovieAsUnwatched(movieId: number, userId: number): Observable<boolean> {
+      return this.http.delete<boolean>(`${this.baseUrl}/watched/${movieId}/${userId}`);
     }
+    
+
+    isMovieWatched(movieId: number, userId: number): Observable<boolean> {
+      return this.http.get<{ isWatched: boolean }>(`http://localhost:3000/api/movies/watched/${movieId}/${userId}`)
+      .pipe(
+        map(response => response.isWatched)
+      );    
+    }
+
     
 
 
