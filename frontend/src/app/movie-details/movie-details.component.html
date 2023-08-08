@@ -14,7 +14,7 @@
         <select [(ngModel)]="rating" (change)="updateRating()">
           <option *ngFor="let ratingOption of ratingOptions" [value]="ratingOption">{{ ratingOption }}</option>
         </select>
-        <button (click)="unmarkMovieAsWatched()">Unwatch</button>
+        <button (click)="unmarkMovieAsWatched()">Watched</button>
       </div>
       
 

@@ -24,6 +24,7 @@ async function fetchPopularMovies(req, res) {
 
 async function fetchMovieDetails(req, res) {
   const movieId = req.params.id;
+  console.log("fetching details for: "+ movieId);
   const url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
   const options = {
     method: 'GET',
@@ -73,4 +74,7 @@ router.get('/movies/search/:query', fetchMovieSearchResults);
 
 //what movies has the user watched
 
-module.exports = router;
+module.exports = {
+  router,
+  fetchMovieDetails
+};

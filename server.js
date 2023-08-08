@@ -23,7 +23,7 @@ const loginRoute = require('./routes/login');
 app.use('/api', loginRoute);
 
 // Import and use the movie route
-const movieRoute = require('./routes/movies');
+const {router: movieRoute} = require('./routes/movies');
 app.use('/api', movieRoute);
 
 const watchedMoviesRoute = require('./routes/watchedMovies');

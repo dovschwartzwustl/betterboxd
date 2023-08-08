@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, tap } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Movie } from './movie';
 
@@ -69,6 +69,17 @@ export class MovieService {
   
       return this.http.put(url, body);
     }
+
+    
+    getMoviesWatchedByUser(userId: number): Observable<any[]> {
+      return this.http.get<any>(`${this.baseUrl}/watched/${userId}`).pipe(
+        map(response => response.moviesWatched) // Extract the 'moviesWatched' array
+      );
+    }
+    
+    
+
+    //getBatchMovies (for accessing the movie data for all of the )
 
     
 

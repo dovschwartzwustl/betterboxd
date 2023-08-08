@@ -102,6 +102,7 @@ export class MovieDetailsComponent implements OnInit {
       next: response => {
         console.log('Movie marked as unwatched:', response);
         this.isMovieWatched = false;
+        this.rating = undefined;
       },
       error: error => {
         console.error('Error marking movie as unwatched:', error);

@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
-
 // Insert a new record into the UserWatchedMovies table
 router.post('/watched', async (req, res) => {
   const { userId, movieId, rating } = req.body;
@@ -60,15 +59,17 @@ router.get('/movies/watched/:movieId/:userId', async (req, res) => {
     const query = 'SELECT * FROM user_watched_movies WHERE user_id = ? AND movie_id = ?';
     const values = [userId, movieId];
     const result = await db.query(query, values);
-    console.log(result);
+
     const isWatched = result[0].length > 0;
-    console.log(isWatched);
-    return res.status(200).json({ isWatched });
+    const rating = isWatched ? result[0][0].rating : null;
+
+    return res.status(200).json({ isWatched, rating });
   } catch (error) {
     console.error('Error checking if movie is watched:', error);
     return res.status(500).json({ message: 'Internal server error' });
   }
 });
+
 
 // Route to mark a movie as unwatched
 router.delete('/movies/watched/:movieId/:userId', async (req, res) => {
@@ -96,19 +97,61 @@ router.delete('/movies/watched/:movieId/:userId', async (req, res) => {
 // Route to get movies watched by a user
 router.get('/movies/watched/:userId', async (req, res) => {
   const { userId } = req.params;
+  console.log("Getting movies watched by: " + userId);
 
   try {
     // Get the movies watched by the user
     const query = 'SELECT * FROM user_watched_movies WHERE user_id = ?';
     const values = [userId];
     const moviesWatched = await db.query(query, values);
+    console.log("Number of movies watched:", moviesWatched[0].length);
 
-    return res.status(200).json({ moviesWatched });
+    // Fetch details for each watched movie
+    const movieDetailsPromises = moviesWatched[0].map(async (watchedMovie) => {
+      const movieId = watchedMovie.movie_id;
+      console.log("Movie ID:", movieId);
+
+      try {
+        const movieDetails = await fetchMovieDetails(movieId);
+        return movieDetails;
+      } catch (error) {
+        console.error('Error fetching movie details:', error);
+        throw error; // Re-throw the error
+      }
+    });
+
+    const moviesWatchedWithDetails = await Promise.all(movieDetailsPromises);
+    console.log(moviesWatchedWithDetails);
+    return res.status(200).json({ moviesWatched: moviesWatchedWithDetails });
   } catch (error) {
     console.error('Error getting movies watched by user:', error);
     return res.status(500).json({ message: 'Internal server error' });
   }
 });
+
+
+// Update fetchMovieDetails function to accept movieId as a parameter
+async function fetchMovieDetails(movieId) {
+  console.log("fetching details for: " + movieId);
+  const url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjY2ViNDliNGM5MGJlNGE1MjhiMmIxMzQ3MmZlOTlmYiIsInN1YiI6IjY0YzkyYzliOGRlMGFlMDBlNDg3NTc3YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.nIvo9JVIRGv1328ddTF9dDut63qm4BUaVQTUqlwL2T4'
+    }
+  };
+
+  try {
+    const response = await fetch(url, options);
+    const movie = await response.json();
+    return movie; // Return the movie details
+  } catch (error) {
+    console.error('Error fetching movie:', error);
+    throw error; // Re-throw the error
+  }
+}
+
 
 
 module.exports = router;
