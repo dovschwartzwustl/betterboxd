@@ -53,11 +53,21 @@ export class MovieService {
     }
     
 
-    isMovieWatched(movieId: number, userId: number): Observable<boolean> {
-      return this.http.get<{ isWatched: boolean }>(`http://localhost:3000/api/movies/watched/${movieId}/${userId}`)
-      .pipe(
-        map(response => response.isWatched)
-      );    
+    isMovieWatched(movieId: number, userId: number): Observable<{ isWatched: boolean, rating?: number }> {
+      return this.http.get<{ isWatched: boolean, rating?: number }>(`http://localhost:3000/api/movies/watched/${movieId}/${userId}`)
+        .pipe(
+          map(response => ({
+            isWatched: response.isWatched,
+            rating: response.rating
+          }))
+        );
+    }
+
+    updateMovieRating(userId: number, movieId: number, rating: number): Observable<any> {
+      const url = `${this.baseWatchedUrl}/update-rating`;
+      const body = { userId, movieId, rating };
+  
+      return this.http.put(url, body);
     }
 
     

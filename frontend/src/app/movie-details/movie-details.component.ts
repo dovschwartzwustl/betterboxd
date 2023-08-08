@@ -6,12 +6,13 @@ import { Movie } from '../movie';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { of,Observable, Subscription } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-movie-details',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './movie-details.component.html',
   styleUrls: ['./movie-details.component.scss']
 })
@@ -22,6 +23,7 @@ export class MovieDetailsComponent implements OnInit {
   movie: Movie | undefined;
   isLoggedIn$: Observable<boolean>;
   isMovieWatched: boolean = false;
+  ratingOptions: number[] = [1, 2, 3, 4, 5];
 
   private isLoggedInSubscription: Subscription | undefined;
 
@@ -55,10 +57,12 @@ export class MovieDetailsComponent implements OnInit {
         const userId = this.AuthService.getUserIdFromToken();
     
         // Check if movie is watched by the user
-        //SYNC UP THE BOOLEAN VALUES TO WORK PROPERLY
+        //THIS SHOULD FETCH THE RATING TOO
         this.MovieService.isMovieWatched(+this.movieId!, userId).subscribe(response => {
-          this.isMovieWatched = response;
+          this.isMovieWatched = response.isWatched;
+          this.rating = response.rating;
         });
+        
       }
     });
     
@@ -69,8 +73,8 @@ export class MovieDetailsComponent implements OnInit {
     this.isLoggedInSubscription?.unsubscribe();
   }
 
-  markMovieAsWatched() {
-    console.log("marking as watched");
+  rateMovieAndMarkAsWatched() {
+    console.log("rating and marking as watched");
     const userId = this.AuthService.getUserIdFromToken();
 
     if (this.movieId !== null) {
@@ -103,6 +107,21 @@ export class MovieDetailsComponent implements OnInit {
         console.error('Error marking movie as unwatched:', error);
       }
     });
+  }
+
+  updateRating() {
+    const userId = this.AuthService.getUserIdFromToken();
+    if(this.rating != undefined || this.rating != null) {
+      this.MovieService.updateMovieRating(userId, +this.movieId!, this.rating).subscribe({
+      next: response => {
+        console.log('Movie rating updated:', response);
+      },
+      error: error => {
+        console.error('Error updating movie rating:', error);
+      }
+    });
+    }
+    
   }
 
 

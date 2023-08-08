@@ -26,6 +26,7 @@ router.post('/watched', async (req, res) => {
 
 router.put('/watched/update-rating', async (req, res) => {
   const { userId, movieId, rating } = req.body;
+  console.log("updating rating");
 
   // Validate input data
   if (!userId || !movieId || rating === undefined || rating === null) {
