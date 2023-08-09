@@ -29,6 +29,9 @@ app.use('/api', movieRoute);
 const watchedMoviesRoute = require('./routes/watchedMovies');
 app.use('/api', watchedMoviesRoute);
 
+const usersRoute = require('./routes/users');
+app.use('/api', usersRoute);
+
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
