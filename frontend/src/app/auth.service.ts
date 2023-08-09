@@ -84,6 +84,10 @@ export class AuthService {
     );
   }
 
+  getToken(): string | null {
+    return localStorage.getItem('authToken');
+  }
+
   getDecodedToken(token: string): any {
     return this.jwtHelper.decodeToken(token);
   }

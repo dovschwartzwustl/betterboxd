@@ -5,6 +5,23 @@
   <p>Following</p>
 </div>
 
+
+<div *ngIf="isLoggedIn && !isMyProfile">
+  <!-- Show follow/unfollow button -->
+  <button (click)="toggleFollowUser()">
+    {{ isFollowing ? 'Unfollow' : 'Follow' }}
+  </button>
+</div>
+<div *ngIf="isLoggedIn && isMyProfile">
+  <!-- This is your own profile, no button -->
+</div>
+<div *ngIf="!isLoggedIn">
+  <!-- Show "Log in to follow" message -->
+  <button>Log in to follow this user</button>
+</div>
+
+
+
 <h2>Watched Movies</h2>
 
 <section class="results">
