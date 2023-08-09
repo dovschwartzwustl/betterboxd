@@ -9,16 +9,45 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   providedIn: 'root'
 })
 export class AuthService {
+  private baseUrl = 'http://localhost:3000/api';
   private baseLoginUrl = 'http://localhost:3000/api/login';
   private baseRegisterUrl = 'http://localhost:3000/api/register';
   private isLoggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
+  private tokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
+  token$: Observable<string | null> = this.tokenSubject.asObservable();
 
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
     const isLoggedIn = !!localStorage.getItem('authToken');
     this.isLoggedInSubject.next(isLoggedIn);
   }
 
+  loginUser(username: string, password: string): Observable<any> {
+    const user = { username, password };
+    return this.http.post<any>(this.baseLoginUrl, user).pipe(
+      tap(response => {
+        const token = response.token;
+        localStorage.setItem('authToken', token);
+        this.isLoggedInSubject.next(true);
+        this.tokenSubject.next(token);
+        
+      })
+    );
+  }
+
+  registerUser(user: any): Observable<any> {
+    return this.http.post<any>(this.baseRegisterUrl, user).pipe(
+      tap(response => {
+        const token = response.token;
+        localStorage.setItem('authToken', token);
+        this.isLoggedInSubject.next(true);
+        this.tokenSubject.next(token); // Set the token in the tokenSubject
+      })
+    );
+  }
+
+
+  /* prev login and register method
   loginUser(username: string, password: string): Observable<any> {
     const user = { username, password };
     return this.http.post<any>(this.baseLoginUrl, user).pipe(
@@ -29,6 +58,7 @@ export class AuthService {
       })
     );
   }
+  
 
   registerUser(user: any): Observable<any> {
     return this.http.post<any>(this.baseRegisterUrl, user).pipe(
@@ -39,6 +69,7 @@ export class AuthService {
       })
     );
   }
+  */
 
   logout() {
     localStorage.removeItem('authToken');
@@ -67,4 +98,6 @@ export class AuthService {
     } 
     throw new Error("no user id")
   }
+
+  
 }

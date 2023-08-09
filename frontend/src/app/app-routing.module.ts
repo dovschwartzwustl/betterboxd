@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'login', component: UserLoginComponent, title: "Login", canActivate: [AuthGuard]},
   { path: 'register', component: UserRegistrationComponent, title: "Register", canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, title: "Profile"},
+  { path: 'profile/:userId', component: ProfileComponent, title: "Profile"},
   { path: 'search/:query', component: SearchResultsComponent, title: "Search Results"},
   { path: 'usersearch/:query', component: UserSearchResultsComponent, title: "User Search Results"},
   { path: 'movie/:id', component: MovieDetailsComponent }

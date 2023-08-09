@@ -6,6 +6,7 @@ import { MovieService } from '../movies.service';
 import { ActivatedRoute } from '@angular/router';
 import { MovieComponent } from '../movie/movie.component';
 import { RouterModule } from '@angular/router';
+import { UsersService } from '../users.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,27 +17,19 @@ import { RouterModule } from '@angular/router';
 })
 
 export class ProfileComponent implements OnInit {
-  userId: number | undefined;
+  userId: string | null = null;
   username: string | undefined;
   watchedMovies: Movie[] = [];
 
-  constructor(private authService: AuthService, private MovieService: MovieService) { }
+  constructor(private route: ActivatedRoute, private authService: AuthService, private MovieService: MovieService, private UsersService: UsersService) { }
 
   ngOnInit(): void {
-    // Get the token from local storage
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      // Decode the token and parse the payload
-      const decodedToken = this.authService.getDecodedToken(token);
-      // Access the user's ID from the payload
-      this.userId = decodedToken.userId;
-      this.username = decodedToken.username;
+    this.route.paramMap.subscribe(params => {
+      this.userId = params.get('userId');
       this.getWatchedMovies();
-      console.log(this.watchedMovies);
-    }
-
-    //call getWatchedMovies
-
+      this.getUsername();
+      
+    });
   }
 
   getWatchedMovies() {
@@ -52,5 +45,18 @@ export class ProfileComponent implements OnInit {
     }
     
 
+  }
+
+  getUsername() {
+    if(this.userId != undefined) {
+      this.UsersService.getUsernameFromId(this.userId).subscribe({
+        next: (response) => {
+          this.username = response.username;
+        },
+        error: (error) => {
+          console.error('Error fetching username:', error);
+        }
+      })
+    }
   }
 }

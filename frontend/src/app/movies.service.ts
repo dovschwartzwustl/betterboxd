@@ -71,7 +71,7 @@ export class MovieService {
     }
 
     
-    getMoviesWatchedByUser(userId: number): Observable<any[]> {
+    getMoviesWatchedByUser(userId: string): Observable<any[]> {
       return this.http.get<any>(`${this.baseUrl}/watched/${userId}`).pipe(
         map(response => response.moviesWatched) // Extract the 'moviesWatched' array
       );

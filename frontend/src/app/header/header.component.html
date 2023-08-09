@@ -3,7 +3,7 @@
   <div>
     <ng-container *ngIf="isLoggedIn$ | async; else showLoginButton">
       
-      <a [routerLink]="['/profile']"><button>Profile</button></a>
+      <a [routerLink]="['/profile', userId]"><button>Profile</button></a>
       <button (click)="logout()" [routerLink]="['/']">Logout</button>
     </ng-container>
     <ng-template #showLoginButton>

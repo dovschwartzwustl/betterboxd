@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { CommonModule } from '@angular/common';
@@ -13,13 +13,23 @@ import { CommonModule } from '@angular/common';
 })
 export class HeaderComponent implements OnInit {
   isLoggedIn$ = this.authService.isLoggedIn$;
+  userId: string | null = null;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.isLoggedIn$ = this.authService.isLoggedIn();
-    console.log(localStorage.getItem('authToken'));
+    this.authService.token$.subscribe(token => {
+      if (token) {
+        console.log("found token");
+        const decodedToken = this.authService.getDecodedToken(token);
+        this.userId = decodedToken.userId;
+      } else {
+        console.log("no token");
+        this.userId = null;
+      }
+    });
   }
+  
 
   logout() {
     this.authService.logout();
