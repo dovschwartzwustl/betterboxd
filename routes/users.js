@@ -3,7 +3,7 @@ const router = express.Router();
 const fetch = require('node-fetch');
 const db = require('../db');
 
-router.get('/users/:query', async (req, res) =>  {
+router.get('/users/search/:query', async (req, res) =>  {
     const queryParam = req.params;
 
     try {

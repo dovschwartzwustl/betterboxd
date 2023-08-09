@@ -15,6 +15,7 @@ import { SearchInputComponent } from './search-input/search-input.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { UserSearchInputComponent } from './user-search-input/user-search-input.component';
 import { UserSearchResultsComponent } from './user-search-results/user-search-results.component';
+import { UserComponent } from './user/user.component';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -22,7 +23,7 @@ export function tokenGetter() {
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [ BrowserModule, FormsModule, HeaderComponent, HomeComponent, UserLoginComponent, UserRegistrationComponent, ProfileComponent, SearchInputComponent, SearchResultsComponent, UserSearchInputComponent, UserSearchResultsComponent, AppRoutingModule, HttpClientModule,
+  imports: [ BrowserModule, FormsModule, HeaderComponent, HomeComponent, UserLoginComponent, UserRegistrationComponent, ProfileComponent, SearchInputComponent, SearchResultsComponent, UserSearchInputComponent, UserSearchResultsComponent, UserComponent, AppRoutingModule, HttpClientModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

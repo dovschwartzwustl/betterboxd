@@ -1,1 +1,6 @@
-<p>user-search-results works!</p>
+<h1>Search Results for {{query}}</h1>
+<section class="results">
+    <a *ngFor="let user of searchResults">
+      <app-user [user]="user"></app-user>
+    </a>
+  </section>
