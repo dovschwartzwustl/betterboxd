@@ -45,21 +45,21 @@ router.get('/users/:userId/username', async (req, res) => {
 
 //add a user following relationship
 router.post('/users/follow/:userId', authenticateToken, async (req, res) => {
-  const followerId = req.user.id; // Get the authenticated user's ID
+  const followerId = req.user.userId; // Get the authenticated user's ID
   const followingId = req.params.userId;
 
   try {
     // Check if the user is already following the target user
-    const queryCheck = 'SELECT * FROM user_followers WHERE follower_id = ? AND following_id = ?';
+    const queryCheck = 'SELECT * FROM followers WHERE follower_id = ? AND following_id = ?';
     const valuesCheck = [followerId, followingId];
     const existingRelationship = await db.query(queryCheck, valuesCheck);
 
-    if (existingRelationship.length > 0) {
+    if (existingRelationship[0].length > 0) {
       return res.status(400).json({ message: 'You are already following this user' });
     }
 
     // Insert the new relationship into the user_followers table
-    const queryInsert = 'INSERT INTO user_followers (follower_id, following_id) VALUES (?, ?)';
+    const queryInsert = 'INSERT INTO followers (follower_id, following_id) VALUES (?, ?)';
     const valuesInsert = [followerId, followingId];
     await db.query(queryInsert, valuesInsert);
 
@@ -72,21 +72,21 @@ router.post('/users/follow/:userId', authenticateToken, async (req, res) => {
 
 //remove a user following relationship
 router.delete('/users/unfollow/:userId', authenticateToken, async (req, res) => {
-  const followerId = req.user.id; // Get the authenticated user's ID
+  const followerId = req.user.userId; // Get the authenticated user's ID
   const followingId = req.params.userId;
 
   try {
     // Check if the user is following the target user
-    const queryCheck = 'SELECT * FROM user_followers WHERE follower_id = ? AND following_id = ?';
+    const queryCheck = 'SELECT * FROM followers WHERE follower_id = ? AND following_id = ?';
     const valuesCheck = [followerId, followingId];
     const existingRelationship = await db.query(queryCheck, valuesCheck);
 
-    if (existingRelationship.length === 0) {
+    if (existingRelationship[0].length === 0) {
       return res.status(400).json({ message: 'You are not following this user' });
     }
 
     // Delete the relationship from the user_followers table
-    const queryDelete = 'DELETE FROM user_followers WHERE follower_id = ? AND following_id = ?';
+    const queryDelete = 'DELETE FROM followers WHERE follower_id = ? AND following_id = ?';
     const valuesDelete = [followerId, followingId];
     await db.query(queryDelete, valuesDelete);
 

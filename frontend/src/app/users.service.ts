@@ -34,7 +34,7 @@ export class UsersService {
       Authorization: `Bearer ${token}`
     };
 
-    return this.http.post<any>(`${this.baseUrl}/users/follow/${userId}`, {}, { headers });
+    return this.http.post<any>(`${this.baseUrl}/follow/${userId}`, {}, { headers });
   }
 
   unfollowUser(userId: string): Observable<any> {
@@ -46,7 +46,7 @@ export class UsersService {
       Authorization: `Bearer ${token}`
     };
 
-    return this.http.delete<any>(`${this.baseUrl}/users/unfollow/${userId}`, { headers });
+    return this.http.delete<any>(`${this.baseUrl}/unfollow/${userId}`, { headers });
   }
 
   isFollowingUser(userId: string): Observable<boolean> {
