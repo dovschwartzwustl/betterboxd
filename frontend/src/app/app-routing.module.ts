@@ -11,13 +11,13 @@ import { UserSearchResultsComponent } from './user-search-results/user-search-re
 import { FollowersComponent } from './followers/followers.component';
 import { FollowingComponent } from './following/following.component';
 import { MoviesComponent } from './movies/movies.component';
+import { UserListsComponent } from './user-lists/user-lists.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, title: "Home"},
   { path: 'login', component: UserLoginComponent, title: "Login", canActivate: [AuthGuard]},
   { path: 'register', component: UserRegistrationComponent, title: "Register", canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, title: "Profile"},
-  
   { path: 'search/:query', component: SearchResultsComponent, title: "Search Results"},
   { path: 'usersearch/:query', component: UserSearchResultsComponent, title: "User Search Results"},
   { path: 'movie/:id', component: MovieDetailsComponent },
@@ -26,7 +26,8 @@ const routes: Routes = [
       { path: '', redirectTo: 'movies', pathMatch: 'full' },
       { path: 'followers', component: FollowersComponent },
       { path: 'following', component: FollowingComponent },
-      { path: 'movies', component: MoviesComponent }
+      { path: 'movies', component: MoviesComponent },
+      { path: 'lists', component: UserListsComponent }
     ]
   }
 ];

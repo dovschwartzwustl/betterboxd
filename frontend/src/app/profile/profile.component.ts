@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { UsersService } from '../users.service';
 import { Subscription } from 'rxjs';
 import { MoviesComponent } from '../movies/movies.component';
+import { UserListsComponent } from '../user-lists/user-lists.component';
 
 @Component({
   selector: 'app-profile',
