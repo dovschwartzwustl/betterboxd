@@ -59,4 +59,8 @@ export class UsersService {
     );
   }
 
+  getUserFollowCounts(userId: string): Observable<number[]> {
+    return this.http.get<number[]>(`${this.baseUrl}/${userId}/follow-counts`);
+  }
+
 }

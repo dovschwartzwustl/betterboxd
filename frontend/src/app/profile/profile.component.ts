@@ -20,6 +20,8 @@ import { Observable, Subscription } from 'rxjs';
 export class ProfileComponent implements OnInit {
   userId: string | null = null;
   username: string | undefined;
+  followingCount: number | undefined;
+  followerCount: number | undefined;
   watchedMovies: Movie[] = [];
   isFollowing: boolean = false; 
   isMyProfile: boolean = false;
@@ -36,6 +38,7 @@ export class ProfileComponent implements OnInit {
       this.userId = params.get('userId');
       this.getWatchedMovies();
       this.getUsername();
+      this.getUserFollowCounts();
   
       this.isLoggedInSubscription = this.authService.isLoggedIn().subscribe(loggedIn => {
         this.isLoggedIn = loggedIn;
@@ -106,6 +109,7 @@ export class ProfileComponent implements OnInit {
         this.UsersService.unfollowUser(this.userId).subscribe({
           next: () => {
             this.isFollowing = false;
+            this.getUserFollowCounts(); // Get updated counts from the server
           },
           error: (error) => {
             console.error('Error unfollowing user:', error);
@@ -116,6 +120,7 @@ export class ProfileComponent implements OnInit {
         this.UsersService.followUser(this.userId).subscribe({
           next: () => {
             this.isFollowing = true;
+            this.getUserFollowCounts(); // Get updated counts from the server
           },
           error: (error) => {
             console.error('Error following user:', error);
@@ -124,5 +129,20 @@ export class ProfileComponent implements OnInit {
       }
     }
   }
+
+  // Assuming you have imported and injected the UserService in your component
+  getUserFollowCounts() {
+    this.UsersService.getUserFollowCounts(this.userId!).subscribe({
+      next: (response: any) => {
+        this.followingCount = response.counts[0];
+        this.followerCount = response.counts[1];
+      },
+      error: (error) => {
+        console.error('Error fetching follow counts:', error);
+      }
+    });
+  }
+  
+
   
 }

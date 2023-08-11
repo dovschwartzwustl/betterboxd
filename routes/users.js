@@ -120,10 +120,29 @@ router.get('/users/isFollowing/:userId', authenticateToken, async (req, res) => 
 });
 
 
+router.get('/users/:userId/follow-counts', async (req, res) => {
+  const userId = req.params.userId;
 
+  try {
+    const followingCountQuery = 'SELECT COUNT(*) AS followingCount FROM followers WHERE follower_id = ?';
+    const followerCountQuery = 'SELECT COUNT(*) AS followerCount FROM followers WHERE following_id = ?';
 
-//get a user's followers
+    const followingCountResult = await db.query(followingCountQuery, [userId]);
+    const followerCountResult = await db.query(followerCountQuery, [userId]);
 
-//get a user's following
+    const followingCount = followingCountResult[0][0].followingCount;
+    const followerCount = followerCountResult[0][0].followerCount;
+
+    const counts = [followingCount, followerCount];
+    console.log(counts);
+    
+    return res.status(200).json({ counts });
+  } catch (error) {
+    console.error('Error fetching follow counts:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+module.exports = router;
 
 module.exports = router;
