@@ -10,18 +10,25 @@ import { SearchResultsComponent } from './search-results/search-results.componen
 import { UserSearchResultsComponent } from './user-search-results/user-search-results.component';
 import { FollowersComponent } from './followers/followers.component';
 import { FollowingComponent } from './following/following.component';
+import { MoviesComponent } from './movies/movies.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, title: "Home"},
   { path: 'login', component: UserLoginComponent, title: "Login", canActivate: [AuthGuard]},
   { path: 'register', component: UserRegistrationComponent, title: "Register", canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, title: "Profile"},
-  { path: 'profile/:userId', component: ProfileComponent, title: "Profile"},
+  
   { path: 'search/:query', component: SearchResultsComponent, title: "Search Results"},
   { path: 'usersearch/:query', component: UserSearchResultsComponent, title: "User Search Results"},
   { path: 'movie/:id', component: MovieDetailsComponent },
-  { path: 'followers/:userId', component: FollowersComponent, title: "Followers" },
-  { path: 'following/:userId', component: FollowingComponent, title: "Following" },
+  { path: 'profile/:userId', component: ProfileComponent,
+    children: [
+      { path: '', redirectTo: 'movies', pathMatch: 'full' },
+      { path: 'followers', component: FollowersComponent },
+      { path: 'following', component: FollowingComponent },
+      { path: 'movies', component: MoviesComponent }
+    ]
+  }
 ];
 
 @NgModule({

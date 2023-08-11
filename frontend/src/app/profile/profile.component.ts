@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth.service';
-import { Movie } from '../movie';
 import { MovieService } from '../movies.service';
 import { ActivatedRoute } from '@angular/router';
-import { MovieComponent } from '../movie/movie.component';
 import { RouterModule } from '@angular/router';
 import { UsersService } from '../users.service';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { MoviesComponent } from '../movies/movies.component';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [MovieComponent, CommonModule, RouterModule],
+  imports: [MoviesComponent, CommonModule, RouterModule],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
@@ -22,7 +21,6 @@ export class ProfileComponent implements OnInit {
   username: string | undefined;
   followingCount: number | undefined;
   followerCount: number | undefined;
-  watchedMovies: Movie[] = [];
   isFollowing: boolean = false; 
   isMyProfile: boolean = false;
   isLoggedIn: boolean = false;
@@ -36,7 +34,6 @@ export class ProfileComponent implements OnInit {
     // Getting the user's watched movies and username
     this.route.paramMap.subscribe(params => {
       this.userId = params.get('userId');
-      this.getWatchedMovies();
       this.getUsername();
       this.getUserFollowCounts();
   
@@ -74,20 +71,7 @@ export class ProfileComponent implements OnInit {
     this.isLoggedInSubscription?.unsubscribe();
   }
 
-  getWatchedMovies() {
-    if(this.userId != undefined) {
-      this.MovieService.getMoviesWatchedByUser(this.userId).subscribe({
-      next: (response) => {
-        this.watchedMovies = response; // Assign the 'results' array to the 'movies' property
-      },
-      error: (error) => {
-        console.error('Error fetching movies:', error);
-      }
-    });
-    }
-    
-
-  }
+  
 
   getUsername() {
     if(this.userId != undefined) {

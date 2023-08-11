@@ -143,6 +143,41 @@ router.get('/users/:userId/follow-counts', async (req, res) => {
   }
 });
 
-module.exports = router;
+//get a user's followers
+router.get('/users/followers/:userId', async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const query = 'SELECT followers.following_id, users.username FROM followers INNER JOIN users ON followers.follower_id = users.id WHERE followers.following_id = ?';
+    const results = await db.query(query, [userId]);
+    const followers = results[0];
+    console.log("followers: " + followers);
+    
+    res.status(200).json({ followers });
+  } catch (error) {
+    console.error('Error fetching followers:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+//get a user's following
+router.get('/users/following/:userId', async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const query = 'SELECT followers.follower_id, users.username FROM followers INNER JOIN users ON followers.following_id = users.id WHERE followers.follower_id = ?';
+    const results = await db.query(query, [userId]);
+    const following = results[0];
+    console.log("following: " + following);
+    
+    res.status(200).json({ following });
+  } catch (error) {
+    console.error('Error fetching following:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+
 
 module.exports = router;

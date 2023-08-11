@@ -22,10 +22,4 @@
 
 
 
-<h2>Watched Movies</h2>
-
-<section class="results">
-    <a *ngFor="let movie of watchedMovies" [routerLink]="['/movie', movie.id]">
-      <app-movie [movie]="movie"></app-movie>
-    </a>
-  </section>
+<router-outlet></router-outlet>
