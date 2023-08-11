@@ -6,6 +6,7 @@
     - log in
     - register
 - Put movies on left and lists on right of user profile (or top or bottom but show them both in their own encapsulated sections)
+- If logged in user has no movies watched it should display a search option to find movies on their profile
 - Make it so that scrolling down loads more results on home page
 - Pressing enter is the same as pressing search
 - When a user logs in or registers, it takes them to their account page

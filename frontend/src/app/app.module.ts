@@ -19,6 +19,7 @@ import { UserComponent } from './user/user.component';
 import { FollowersComponent } from './followers/followers.component';
 import { FollowingComponent } from './following/following.component';
 import { UserListsComponent } from './user-lists/user-lists.component';
+import { UserListComponent } from './user-list/user-list.component';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -26,7 +27,7 @@ export function tokenGetter() {
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [ BrowserModule, FormsModule, HeaderComponent, HomeComponent, UserLoginComponent, UserRegistrationComponent, ProfileComponent, SearchInputComponent, SearchResultsComponent, UserSearchInputComponent, UserSearchResultsComponent, UserComponent, FollowersComponent, FollowingComponent, UserListsComponent, AppRoutingModule, HttpClientModule,
+  imports: [ BrowserModule, FormsModule, HeaderComponent, HomeComponent, UserLoginComponent, UserRegistrationComponent, ProfileComponent, SearchInputComponent, SearchResultsComponent, UserSearchInputComponent, UserSearchResultsComponent, UserComponent, FollowersComponent, FollowingComponent, UserListsComponent, UserListComponent, AppRoutingModule, HttpClientModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

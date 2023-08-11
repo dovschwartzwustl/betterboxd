@@ -175,6 +175,23 @@ router.get('/users/following/:userId', async (req, res) => {
   }
 });
 
+//get a user's lists
+router.get('/users/lists/:userId', async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const query = 'SELECT id, list_name FROM user_movie_lists WHERE user_id = ?';
+    const results = await db.query(query, [userId]);
+    const lists = results[0];
+    console.log(lists);
+    res.status(200).json({ lists });
+  } catch (error) {
+    console.error('Error fetching lists:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
 
 
 

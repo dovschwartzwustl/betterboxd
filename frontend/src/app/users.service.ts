@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from './user';
+import { UserList } from './user-list';
 import { map } from 'rxjs';
 import { AuthService } from './auth.service';
 
@@ -74,6 +75,13 @@ export class UsersService {
   getFollowing(userId: string): Observable<User[]> {
     return this.http.get<any>(`${this.baseUrl}/following/${userId}`).pipe(
       map(response => response.following)
+    );
+  }
+
+  //Change
+  getUserLists(userId: string): Observable<UserList[]> {
+    return this.http.get<any>(`${this.baseUrl}/lists/${userId}`).pipe(
+      map(response => response.lists)
     );
   }
 
