@@ -1,30 +1,30 @@
-/* movie.component.scss */
-
 .movie-card {
-    /* Add some spacing between movie cards */
-    margin: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .movie-poster {
-    /* Set the maximum width and height for the movie posters */
-    max-width: 200px;
-    max-height: 300px;
-    /* Add some margin to center the image within the movie card */
-    margin: 0 auto;
-    display: block;
-  }
-  
-  h2 {
-    margin-top: 10px;
-    font-size: 18px;
-  }
-  
-  p {
-    font-size: 14px;
-    color: #666;
-  }
-  
+  background: var(--accent-color);
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.movie-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 30px;
+}
+
+
+/*
+.movie-info {
+  padding: 10px 20px;
+  color: var(--primary-color);
+}
+
+.movie-info h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.movie-info p {
+  display: none;
+}
+*/

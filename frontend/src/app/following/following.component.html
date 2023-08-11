@@ -1,1 +1,7 @@
-<p>following works!</p>
+<h2>Following</h2>
+
+<section class="results">
+  <a *ngFor="let user of following" [routerLink]="['/profile', user.id]">
+    <app-user [user]="user"></app-user>
+  </a>
+</section>

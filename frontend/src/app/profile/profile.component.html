@@ -1,8 +1,9 @@
 <h1>{{username}}</h1>
 
 <div class="following">
-  <p>Followers: {{followerCount}}</p>
-  <p>Following: {{followingCount}}</p>
+  <a [routerLink]="['/profile', userId, 'followers']"><p>Followers: {{followerCount}}</p></a>
+  <a [routerLink]="['/profile', userId, 'following']"><p>Following: {{followingCount}}</p></a>
+  <a [routerLink]="['/profile', userId, 'movies']"><p>Movies</p></a>
 </div>
 
 
@@ -17,7 +18,7 @@
 </div>
 <div *ngIf="!isLoggedIn">
   <!-- Show "Log in to follow" message -->
-  <button>Log in to follow this user</button>
+  <button [routerLink]="['/login']">Log in to follow this user</button>
 </div>
 
 

@@ -1,4 +1,6 @@
-<form>
-    <input type="text" name="searchField" [(ngModel)]="query" placeholder="Find a user">   
-    <a [routerLink]="['/usersearch', query]"><button class="primary" type="button" >Search</button></a>
-</form>
+<form class="search-form">
+    <input type="text" name="searchField" [(ngModel)]="query" placeholder="Find a user" class="search-input">   
+    <a [routerLink]="['/usersearch', query]" class="search-button">
+      <button class="primary" type="button">Search</button>
+    </a>
+  </form>

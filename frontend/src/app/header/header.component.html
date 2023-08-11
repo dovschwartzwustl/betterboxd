@@ -1,14 +1,22 @@
 <nav>
-  <a [routerLink]="['/']"><h1>BetterBoxd</h1></a>
-  <div>
+  <a [routerLink]="['/']" class="logo">
+    <h1>BetterBoxd</h1>
+  </a>
+  <section class="search-section">
+    <app-search-input></app-search-input>
+    <app-user-search-input></app-user-search-input>
+  </section>
+  <div class="user-section">
     <ng-container *ngIf="isLoggedIn$ | async; else showLoginButton">
-      
-      <a [routerLink]="['/profile', userId]"><button>Profile</button></a>
-      <button (click)="logout()" [routerLink]="['/']">Logout</button>
+      <a [routerLink]="['/profile', userId]" class="profile-button">
+        <button>Profile</button>
+      </a>
+      <button (click)="logout()" class="logout-button">Logout</button>
     </ng-container>
     <ng-template #showLoginButton>
-      <!-- Show login button if the user is not logged in -->
-      <a [routerLink]="['/login']"><button>Login</button></a>
+      <a [routerLink]="['/login']" class="login-button">
+        <button>Login</button>
+      </a>
     </ng-template>
   </div>
 </nav>

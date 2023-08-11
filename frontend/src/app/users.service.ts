@@ -63,17 +63,17 @@ export class UsersService {
     return this.http.get<number[]>(`${this.baseUrl}/${userId}/follow-counts`);
   }
 
-  //CHANGE
+  
   getFollowers(userId: string): Observable<User[]> {
     return this.http.get<any>(`${this.baseUrl}/followers/${userId}`).pipe(
-      map(response => response.results) // Parse the 'results' array from the API response
+      map(response => response.followers)
     );
   }
 
-  //CHANGE
+  
   getFollowing(userId: string): Observable<User[]> {
     return this.http.get<any>(`${this.baseUrl}/following/${userId}`).pipe(
-      map(response => response.results) // Parse the 'results' array from the API response
+      map(response => response.following)
     );
   }
 

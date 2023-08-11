@@ -1,7 +1,4 @@
-<section>
-    <app-search-input></app-search-input>
-    <app-user-search-input></app-user-search-input>
-  </section>
+
   <h1>Popular Now</h1>
   <section class="results">
     <a *ngFor="let movie of movies" [routerLink]="['/movie', movie.id]">

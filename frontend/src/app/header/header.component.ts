@@ -2,12 +2,14 @@ import { AfterViewInit, Component, OnInit, ChangeDetectorRef } from '@angular/co
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { CommonModule } from '@angular/common';
+import { SearchInputComponent } from '../search-input/search-input.component';
+import { UserSearchInputComponent } from '../user-search-input/user-search-input.component';
 
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [SearchInputComponent, UserSearchInputComponent, CommonModule, RouterModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })

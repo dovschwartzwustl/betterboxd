@@ -134,7 +134,6 @@ router.get('/users/:userId/follow-counts', async (req, res) => {
     const followerCount = followerCountResult[0][0].followerCount;
 
     const counts = [followingCount, followerCount];
-    console.log(counts);
     
     return res.status(200).json({ counts });
   } catch (error) {
@@ -148,10 +147,10 @@ router.get('/users/followers/:userId', async (req, res) => {
   const userId = req.params.userId;
 
   try {
-    const query = 'SELECT followers.following_id, users.username FROM followers INNER JOIN users ON followers.follower_id = users.id WHERE followers.following_id = ?';
+    const query = 'SELECT users.id, users.username FROM followers INNER JOIN users ON followers.follower_id = users.id WHERE followers.following_id = ?';
     const results = await db.query(query, [userId]);
+    console.log(results);
     const followers = results[0];
-    console.log("followers: " + followers);
     
     res.status(200).json({ followers });
   } catch (error) {
@@ -165,10 +164,9 @@ router.get('/users/following/:userId', async (req, res) => {
   const userId = req.params.userId;
 
   try {
-    const query = 'SELECT followers.follower_id, users.username FROM followers INNER JOIN users ON followers.following_id = users.id WHERE followers.follower_id = ?';
+    const query = 'SELECT users.id, users.username FROM followers INNER JOIN users ON followers.following_id = users.id WHERE followers.follower_id = ?';
     const results = await db.query(query, [userId]);
     const following = results[0];
-    console.log("following: " + following);
     
     res.status(200).json({ following });
   } catch (error) {
