@@ -1,1 +1,13 @@
 <h2>Lists</h2>
+
+<section class="results">
+    <ng-container *ngIf="userLists.length > 0; else noLists">
+      <a *ngFor="let list of userLists" [routerLink]="['/profile', userId, 'lists', list.id]">
+        <app-user-list [list]="list"></app-user-list>
+      </a>
+    </ng-container>
+    <ng-template #noLists>
+      <p>No Lists</p>
+    </ng-template>
+  </section>
+  
