@@ -7,7 +7,6 @@ const db = require('../db');
 //searches for users
 router.get('/users/search/:query', async (req, res) =>  {
     const {query} = req.params;
-    console.log("searching for "+ query);
 
     try {
         // Check if the movie is watched by the user
@@ -15,7 +14,6 @@ router.get('/users/search/:query', async (req, res) =>  {
         const sql = 'SELECT id, username from users WHERE username LIKE ?';
         const users = await db.query(sql, [searchQuery]);
         const results = users[0]
-        console.log(results)
     
         return res.status(200).json({ results });
       } catch (error) {
@@ -101,16 +99,18 @@ router.delete('/users/unfollow/:userId', authenticateToken, async (req, res) => 
 
 // Check if the authenticated user is following another user
 router.get('/users/isFollowing/:userId', authenticateToken, async (req, res) => {
-  const followerId = req.user.id; // Get the authenticated user's ID
+  const followerId = req.user.userId; // Get the authenticated user's ID
   const followingId = req.params.userId;
 
   try {
     // Check if the user is following the target user
-    const queryCheck = 'SELECT * FROM user_followers WHERE follower_id = ? AND following_id = ?';
+    const queryCheck = 'SELECT * FROM followers WHERE follower_id = ? AND following_id = ?';
     const valuesCheck = [followerId, followingId];
     const existingRelationship = await db.query(queryCheck, valuesCheck);
+    console.log(existingRelationship);
 
-    const isFollowing = existingRelationship.length > 0;
+    const isFollowing = existingRelationship[0].length > 0;
+    console.log(isFollowing);
 
     return res.status(200).json({ isFollowing });
   } catch (error) {

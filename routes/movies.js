@@ -24,7 +24,6 @@ async function fetchPopularMovies(req, res) {
 
 async function fetchMovieDetails(req, res) {
   const movieId = req.params.id;
-  console.log("fetching details for: "+ movieId);
   const url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
   const options = {
     method: 'GET',
@@ -58,7 +57,6 @@ async function fetchMovieSearchResults(req, res) {
   try {
     const response = await fetch(url, options);
     const movies = await response.json();
-    console.log(movies);
     return res.json(movies);
   } catch (error) {
     console.error('Error fetching movie:', error);

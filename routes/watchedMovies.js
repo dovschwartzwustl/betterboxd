@@ -25,7 +25,6 @@ router.post('/watched', async (req, res) => {
 
 router.put('/watched/update-rating', async (req, res) => {
   const { userId, movieId, rating } = req.body;
-  console.log("updating rating");
 
   // Validate input data
   if (!userId || !movieId || rating === undefined || rating === null) {
@@ -83,7 +82,6 @@ router.delete('/movies/watched/:movieId/:userId', async (req, res) => {
 
     // Check if any rows were deleted
     const rowsDeleted = result.affectedRows;
-    console.log("rows deleted: "+ rowsDeleted);
     const isUnwatched = rowsDeleted > 0;
 
     return res.status(200).json({ isUnwatched });
@@ -97,19 +95,16 @@ router.delete('/movies/watched/:movieId/:userId', async (req, res) => {
 // Route to get movies watched by a user
 router.get('/movies/watched/:userId', async (req, res) => {
   const { userId } = req.params;
-  console.log("Getting movies watched by: " + userId);
 
   try {
     // Get the movies watched by the user
     const query = 'SELECT * FROM user_watched_movies WHERE user_id = ?';
     const values = [userId];
     const moviesWatched = await db.query(query, values);
-    console.log("Number of movies watched:", moviesWatched[0].length);
 
     // Fetch details for each watched movie
     const movieDetailsPromises = moviesWatched[0].map(async (watchedMovie) => {
       const movieId = watchedMovie.movie_id;
-      console.log("Movie ID:", movieId);
 
       try {
         const movieDetails = await fetchMovieDetails(movieId);
@@ -121,7 +116,6 @@ router.get('/movies/watched/:userId', async (req, res) => {
     });
 
     const moviesWatchedWithDetails = await Promise.all(movieDetailsPromises);
-    console.log(moviesWatchedWithDetails);
     return res.status(200).json({ moviesWatched: moviesWatchedWithDetails });
   } catch (error) {
     console.error('Error getting movies watched by user:', error);
@@ -132,7 +126,6 @@ router.get('/movies/watched/:userId', async (req, res) => {
 
 // Update fetchMovieDetails function to accept movieId as a parameter
 async function fetchMovieDetails(movieId) {
-  console.log("fetching details for: " + movieId);
   const url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
   const options = {
     method: 'GET',

@@ -11,7 +11,6 @@ router.post('/login', async (req, res) => {
 
   // Check if the username exists in the database
   const user = await db.query('SELECT * FROM users WHERE username = ?', [username]);
-  console.log(user);
   if (user[0].length === 0) {
     return res.status(401).json({ message: 'Invalid credentials' });
   }

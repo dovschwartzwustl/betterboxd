@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from './user';
 import { map } from 'rxjs';
@@ -50,9 +50,12 @@ export class UsersService {
   }
 
   isFollowingUser(userId: string): Observable<boolean> {
-    return this.http.get<{ isFollowing: boolean }>(`${this.baseUrl}/isFollowing/${userId}`)
-    .pipe(
-      map(response => response.isFollowing)
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.AuthService.getToken()}`
+    });
+  
+    return this.http.get<any>(`${this.baseUrl}/isFollowing/${userId}`, { headers }).pipe(
+      map(response => response.isFollowing) // Extract the 'isFollowing' property from the response
     );
   }
 
