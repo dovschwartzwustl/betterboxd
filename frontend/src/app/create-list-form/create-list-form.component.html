@@ -1,0 +1,9 @@
+<div class="modal-content">
+    <h3>Create a New List</h3>
+    <form (ngSubmit)="createList()">
+        <input type="text" [(ngModel)]="listName" placeholder="Enter list name">
+        <button class="primary" type="submit" (click)="onClose()">Create List</button>
+    </form>
+    <button (click)="onClose()">Close</button>
+</div>
+  

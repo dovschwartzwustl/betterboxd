@@ -5,17 +5,19 @@ import { UsersService } from '../users.service';
 import { ActivatedRoute } from '@angular/router';
 import { UserList } from '../user-list';
 import { UserListComponent } from '../user-list/user-list.component';
+import { CreateListFormComponent } from '../create-list-form/create-list-form.component';
 
 @Component({
   selector: 'app-user-lists',
   standalone: true,
-  imports: [UserListComponent, CommonModule, RouterModule],
+  imports: [CreateListFormComponent, UserListComponent, CommonModule, RouterModule],
   templateUrl: './user-lists.component.html',
   styleUrls: ['./user-lists.component.scss']
 })
 export class UserListsComponent implements OnInit{
   userId: string | null = null;
   userLists: UserList[] = [];
+  showCreateListForm = false;
 
   constructor(private route: ActivatedRoute, private UsersService: UsersService) {}
 
@@ -46,6 +48,14 @@ export class UserListsComponent implements OnInit{
 
   onListClick(list: UserList): void {
     console.log('Clicked list:', list); // Add this line
+  }
+
+  openCreateListForm() {
+    this.showCreateListForm = true;
+  }
+  
+  closeCreateListForm() {
+    this.showCreateListForm = false;
   }
 
   

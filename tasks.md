@@ -1,6 +1,6 @@
 ## To Do
-- Fix user-movie-lists
-- Implement lists
+- Implement create, edit and delete lists
+    - This should only be possible on a user's own profile
 - Lists should have up to 4 movie posters in them, similar to Spotify playlists
 - CSS for:
     - Movie details

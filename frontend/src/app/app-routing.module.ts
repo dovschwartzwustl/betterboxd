@@ -26,10 +26,10 @@ const routes: Routes = [
   { path: 'profile/:userId', component: ProfileComponent,
     children: [
       { path: '', redirectTo: 'movies', pathMatch: 'full' },
-      { path: 'followers', component: FollowersComponent },
-      { path: 'following', component: FollowingComponent },
-      { path: 'movies', component: MoviesComponent, data: { source: 'watched' } },
-      { path: 'lists', component: UserListsComponent },
+      { path: 'followers', component: FollowersComponent, title: "Follwers"},
+      { path: 'following', component: FollowingComponent, title: "Following" },
+      { path: 'movies', component: MoviesComponent, data: { source: 'watched' }, title: "Watched Movies"},
+      { path: 'lists', component: UserListsComponent, title: "Lists" },
       { path: 'lists/:listId', component: UserListMoviesComponent, data: { source: 'list' } }
     ]
   }
