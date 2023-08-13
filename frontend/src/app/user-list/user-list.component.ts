@@ -17,7 +17,11 @@ export class UserListComponent {
   constructor(private route: ActivatedRoute, private router: Router) {}
 
 
-  navigateToUserListMovies(list: UserList): void {
-    this.router.navigate(['lists', list.id], { relativeTo: this.route, state: { list } });
+  navigateToList(listId: number) {
+    // Assuming you have the `list` object in your component
+    const list = this.list;
+  
+    // Navigate to the route with queryParams
+    this.router.navigate(['/lists', listId], { queryParams: { list: JSON.stringify(list) } });
   }
 }

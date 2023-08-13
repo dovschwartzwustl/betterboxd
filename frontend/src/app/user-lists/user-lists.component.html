@@ -2,7 +2,7 @@
 
 <section class="results">
     <ng-container *ngIf="userLists.length > 0; else noLists">
-      <a *ngFor="let list of userLists" [routerLink]="['/profile', userId, 'lists', list.id]">
+      <a *ngFor="let list of userLists" [routerLink]="['/profile', userId, 'lists', list.id]" (click)="onListClick(list)">
         <app-user-list [list]="list"></app-user-list>
       </a>
     </ng-container>

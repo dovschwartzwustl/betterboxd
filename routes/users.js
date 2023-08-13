@@ -183,7 +183,6 @@ router.get('/users/lists/:userId', async (req, res) => {
     const query = 'SELECT id, list_name FROM user_movie_lists WHERE user_id = ?';
     const results = await db.query(query, [userId]);
     const lists = results[0];
-    console.log(lists);
     res.status(200).json({ lists });
   } catch (error) {
     console.error('Error fetching lists:', error);
@@ -191,6 +190,29 @@ router.get('/users/lists/:userId', async (req, res) => {
   }
 });
 
+//get a user list by its ID
+router.get('/users/lists/:userId/:listId', async (req, res) => {
+  console.log("gettings user list by id");
+  const userId = req.params.userId;
+  const listId = req.params.listId;
+
+  try {
+    const query = 'SELECT id, list_name FROM user_movie_lists WHERE user_id = ? AND id = ?';
+    const results = await db.query(query, [userId, listId]);
+    console.log(results);
+    const list = results[0][0];
+    
+    
+    if (!list) {
+      res.status(404).json({ message: 'List not found' });
+    } else {
+      res.status(200).json({ list });
+    }
+  } catch (error) {
+    console.error('Error fetching list:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 
 

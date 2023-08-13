@@ -85,4 +85,10 @@ export class UsersService {
     );
   }
 
+  getListById(userId: string, listId: string): Observable<UserList> {
+    return this.http.get<any>(`${this.baseUrl}/lists/${userId}/${listId}`).pipe(
+      map(response => response.list)
+    );
+  }
+
 }

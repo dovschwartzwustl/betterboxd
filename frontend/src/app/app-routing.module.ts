@@ -13,6 +13,7 @@ import { FollowingComponent } from './following/following.component';
 import { MoviesComponent } from './movies/movies.component';
 import { UserListsComponent } from './user-lists/user-lists.component';
 import { UserListMoviesComponent } from './user-list-movies/user-list-movies.component';
+import { UserList } from './user-list';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, title: "Home"},
@@ -29,7 +30,7 @@ const routes: Routes = [
       { path: 'following', component: FollowingComponent },
       { path: 'movies', component: MoviesComponent },
       { path: 'lists', component: UserListsComponent },
-      { path: 'lists/:listId', component: UserListMoviesComponent, data: {} }
+      { path: 'lists/:listId', component: UserListMoviesComponent}
     ]
   }
 ];

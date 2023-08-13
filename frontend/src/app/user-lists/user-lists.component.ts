@@ -43,4 +43,10 @@ export class UserListsComponent implements OnInit{
       });
     }
   }
+
+  onListClick(list: UserList): void {
+    console.log('Clicked list:', list); // Add this line
+  }
+
+  
 }
