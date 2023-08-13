@@ -14,6 +14,7 @@ import { MovieComponent } from '../movie/movie.component';
   templateUrl: './user-list-movies.component.html',
   styleUrls: ['./user-list-movies.component.scss']
 })
+
 export class UserListMoviesComponent implements OnInit {
   listId: string | null = null;
   userId: string | null = null;
@@ -25,7 +26,6 @@ export class UserListMoviesComponent implements OnInit {
   ngOnInit(): void {
     this.route.parent?.paramMap.subscribe(parentParams => {
       this.userId = parentParams.get('userId');
-      
     });
 
     this.route.params.subscribe(params => {
@@ -34,19 +34,18 @@ export class UserListMoviesComponent implements OnInit {
       console.log('userId:', this.userId);
       console.log('listId:', this.listId);
 
-      // Fetch the list data using your UsersService
       if (this.userId && this.listId) {
         this.usersService.getListById(this.userId, this.listId).subscribe({
           next: (response: any) => {
-            this.listInfo = { id: response.id, name: response.list_name };
+            this.listInfo = { id: response.list.id, name: response.list.name };
+            this.movies = response.movies;
           },
           error: (error) => {
             console.error('Error fetching list:', error);
           }
         });
       }
-      
-      
     });
   }
 }
+

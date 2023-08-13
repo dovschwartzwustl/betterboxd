@@ -1,7 +1,10 @@
 <h2>{{listInfo.name}}</h2>
 
-<section class="results">
+<section class="results" *ngIf="movies.length > 0; else noMovies">
     <a *ngFor="let movie of movies" [routerLink]="['/movie', movie.id]">
       <app-movie [movie]="movie"></app-movie>
     </a>
 </section>
+<ng-template #noMovies>
+    <p>No movies in list yet</p>
+</ng-template>

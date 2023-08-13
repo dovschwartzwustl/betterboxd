@@ -210,10 +210,8 @@ router.get('/users/lists/:userId/:listId', async (req, res) => {
       const listItemsResults = await db.query(listItemsQuery, [listId]);
       const movieIds = listItemsResults[0].map(item => item.movie_id);
 
-      // Query movies table to get details for each movie
-      const moviesQuery = 'SELECT * FROM movies WHERE id IN (?)';
-      const moviesResults = await db.query(moviesQuery, [movieIds]);
-      const movies = moviesResults[0];
+      // Fetch movie details for each movie_id
+      const movies = await Promise.all(movieIds.map(movieId => fetchMovieDetails(movieId)));
 
       // Return the list and movie details
       res.status(200).json({ list, movies });
@@ -224,6 +222,25 @@ router.get('/users/lists/:userId/:listId', async (req, res) => {
   }
 });
 
+async function fetchMovieDetails(movieId) {
+  const url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjY2ViNDliNGM5MGJlNGE1MjhiMmIxMzQ3MmZlOTlmYiIsInN1YiI6IjY0YzkyYzliOGRlMGFlMDBlNDg3NTc3YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.nIvo9JVIRGv1328ddTF9dDut63qm4BUaVQTUqlwL2T4'
+    }
+  };
+
+  try {
+    const response = await fetch(url, options);
+    const movie = await response.json();
+    return movie; // Return the movie details
+  } catch (error) {
+    console.error('Error fetching movie:', error);
+    throw error; // Re-throw the error
+  }
+}
 
 
 

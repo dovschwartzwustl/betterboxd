@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from './user';
+import { Movie } from './movie';
 import { UserList } from './user-list';
 import { map } from 'rxjs';
 import { AuthService } from './auth.service';
@@ -85,10 +86,21 @@ export class UsersService {
     );
   }
 
-  getListById(userId: string, listId: string): Observable<UserList> {
+  getListById(userId: string, listId: string): Observable<{ list: UserList, movies: Movie[] }> {
     return this.http.get<any>(`${this.baseUrl}/lists/${userId}/${listId}`).pipe(
-      map(response => response.list)
+      map(response => {
+        const { list, movies } = response;
+        return {
+          list: {
+            id: list.id,
+            name: list.list_name
+          },
+          movies: movies
+        };
+      })
     );
   }
+  
+  
 
 }
