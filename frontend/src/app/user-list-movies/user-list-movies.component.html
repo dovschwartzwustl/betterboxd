@@ -1,1 +1,7 @@
-<h2>{{list.name}}</h2>
+<h2>{{listInfo.name}}</h2>
+
+<section class="results">
+    <a *ngFor="let movie of movies" [routerLink]="['/movie', movie.id]">
+      <app-movie [movie]="movie"></app-movie>
+    </a>
+</section>

@@ -202,11 +202,21 @@ router.get('/users/lists/:userId/:listId', async (req, res) => {
     console.log(results);
     const list = results[0][0];
     
-    
     if (!list) {
       res.status(404).json({ message: 'List not found' });
     } else {
-      res.status(200).json({ list });
+      // Query user_movie_list_items table to get movie_ids in the list
+      const listItemsQuery = 'SELECT movie_id FROM user_movie_list_items WHERE movie_list_id = ?';
+      const listItemsResults = await db.query(listItemsQuery, [listId]);
+      const movieIds = listItemsResults[0].map(item => item.movie_id);
+
+      // Query movies table to get details for each movie
+      const moviesQuery = 'SELECT * FROM movies WHERE id IN (?)';
+      const moviesResults = await db.query(moviesQuery, [movieIds]);
+      const movies = moviesResults[0];
+
+      // Return the list and movie details
+      res.status(200).json({ list, movies });
     }
   } catch (error) {
     console.error('Error fetching list:', error);

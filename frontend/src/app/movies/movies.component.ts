@@ -15,31 +15,38 @@ import { MovieComponent } from '../movie/movie.component';
 })
 export class MoviesComponent implements OnInit{
   userId: string | null = null;
-
-  watchedMovies: Movie[] = [];
+  source: string | null = null;
+  movies: Movie[] = [];
 
   constructor(private route: ActivatedRoute, private MovieService: MovieService) {}
 
   ngOnInit(): void {
-    // Getting the user's watched movies and username
     this.route.parent?.paramMap.subscribe(params => {
       this.userId = params.get('userId');
-      this.getWatchedMovies();
-  });
-}
+      this.source = this.route.snapshot.data['source']; // Read the 'source' parameter
+
+      if (this.source === 'watched') {
+        this.getWatchedMovies();
+      } else if (this.source === 'list') {
+        this.getListMovies();
+      }
+    });
+  }
 
   getWatchedMovies() {
     if(this.userId != undefined) {
       this.MovieService.getMoviesWatchedByUser(this.userId).subscribe({
       next: (response) => {
-        this.watchedMovies = response; // Assign the 'results' array to the 'movies' property
+        this.movies = response; // Assign the 'results' array to the 'movies' property
       },
       error: (error) => {
         console.error('Error fetching movies:', error);
       }
     });
     }
-    
+  }
+
+  getListMovies() {
 
   }
 

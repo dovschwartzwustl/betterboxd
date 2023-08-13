@@ -28,9 +28,9 @@ const routes: Routes = [
       { path: '', redirectTo: 'movies', pathMatch: 'full' },
       { path: 'followers', component: FollowersComponent },
       { path: 'following', component: FollowingComponent },
-      { path: 'movies', component: MoviesComponent },
+      { path: 'movies', component: MoviesComponent, data: { source: 'watched' } },
       { path: 'lists', component: UserListsComponent },
-      { path: 'lists/:listId', component: UserListMoviesComponent}
+      { path: 'lists/:listId', component: UserListMoviesComponent, data: { source: 'list' } }
     ]
   }
 ];

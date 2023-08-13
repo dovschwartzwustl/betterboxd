@@ -2,19 +2,23 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserList } from '../user-list';
 import { ActivatedRoute } from '@angular/router';
+import { RouterModule} from '@angular/router';
 import { UsersService } from '../users.service';
+import { Movie } from '../movie';
+import { MovieComponent } from '../movie/movie.component';
 
 @Component({
   selector: 'app-user-list-movies',
   standalone: true,
-  imports: [CommonModule],
+  imports: [MovieComponent, RouterModule, CommonModule],
   templateUrl: './user-list-movies.component.html',
   styleUrls: ['./user-list-movies.component.scss']
 })
 export class UserListMoviesComponent implements OnInit {
   listId: string | null = null;
   userId: string | null = null;
-  list: UserList = { id: 0, name: '' };
+  listInfo: UserList = { id: 0, name: '' };
+  movies: Movie[] = [];
 
   constructor(private route: ActivatedRoute, private usersService: UsersService) {}
 
@@ -34,7 +38,7 @@ export class UserListMoviesComponent implements OnInit {
       if (this.userId && this.listId) {
         this.usersService.getListById(this.userId, this.listId).subscribe({
           next: (response: any) => {
-            this.list = { id: response.id, name: response.list_name };
+            this.listInfo = { id: response.id, name: response.list_name };
           },
           error: (error) => {
             console.error('Error fetching list:', error);
