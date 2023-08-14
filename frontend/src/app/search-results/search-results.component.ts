@@ -41,6 +41,9 @@ export class SearchResultsComponent {
     });
   }
 
+getPosterUrl(posterPath: string): string {
+    return this.MovieService.getPosterUrl(posterPath);
+  }
   
 
 }

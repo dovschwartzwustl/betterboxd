@@ -100,6 +100,16 @@ export class UsersService {
       })
     );
   }
+
+  createList(name: string, userId: string): Observable<any> {
+    const newList = { name, user_id: userId };
+    return this.http.post<any>(`${this.baseUrl}/lists`, newList);
+  }
+
+
+  addMoviesToList(listItems: any[]): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/list-items`, listItems);
+  }
   
   
 

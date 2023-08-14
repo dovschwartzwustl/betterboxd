@@ -11,7 +11,7 @@
       <a [routerLink]="['/profile', userId]" class="profile-button">
         <button>Profile</button>
       </a>
-      <button (click)="logout()" class="logout-button">Logout</button>
+      <button (click)="logout()" class="logout-button" [routerLink]="['/']">Logout</button>
     </ng-container>
     <ng-template #showLoginButton>
       <a [routerLink]="['/login']" class="login-button">

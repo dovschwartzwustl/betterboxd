@@ -31,9 +31,12 @@
   }
   
   .search-results {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
+    display: grid;
+    column-gap: 14px;
+    row-gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 400px));
+    margin-top: 50px;
+    justify-content: space-around;
   }
   
   .movie-card {
