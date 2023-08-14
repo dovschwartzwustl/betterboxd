@@ -3,6 +3,8 @@
     <form (ngSubmit)="onCreateListSubmit()">
       <label for="listName">List Name:</label>
       <input type="text" id="listName" name="listName" [(ngModel)]="listName" placeholder="Enter list name" required>
+      <label for="listName">Description:</label>
+      <input type="text" id="description" name="description" [(ngModel)]="description" placeholder="Describe your list">
   
       <label for="movieSearch">Search Movies:</label>
       <input type="text" id="movieSearch" name="movieSearch" [(ngModel)]="searchQuery" placeholder="Search for movies" (input)="onMovieSearch()">

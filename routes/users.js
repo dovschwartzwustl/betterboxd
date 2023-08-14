@@ -245,11 +245,11 @@ async function fetchMovieDetails(movieId) {
 
 // Create a new list
 router.post('/users/lists', async (req, res) => {
-  const { name, user_id } = req.body;
+  const { name, user_id, description } = req.body;
 
   try {
-    const query = 'INSERT INTO user_movie_lists (list_name, user_id) VALUES (?, ?)';
-    const result = await db.query(query, [name, user_id]);
+    const query = 'INSERT INTO user_movie_lists (list_name, description, user_id) VALUES (?, ?, ?)';
+    const result = await db.query(query, [name, description, user_id]);
     const listId = result[0].insertId; // Get the ID of the newly inserted list
 
     res.status(201).json({ listId }); // Return the list ID

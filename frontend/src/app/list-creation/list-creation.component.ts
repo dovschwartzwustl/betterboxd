@@ -22,6 +22,7 @@ import { Router } from '@angular/router';
 export class ListCreationComponent implements OnInit{
   userId: string | null = null;
   listName: string|null =null;
+  description: string|undefined =undefined;
   searchQuery: string|null= null;
   searchResults: Movie[]=[];
   selectedMovies: Movie[]=[];
@@ -45,7 +46,7 @@ export class ListCreationComponent implements OnInit{
 
   onCreateListSubmit() {
     if (this.userId && this.listName) {
-      this.UsersService.createList(this.listName, this.userId).subscribe({
+      this.UsersService.createList(this.listName, this.userId, this.description).subscribe({
         next: (response: any) => {
           const newListId = response.listId;
           const listItems: any[] = [];
@@ -70,6 +71,7 @@ export class ListCreationComponent implements OnInit{
       });
     }
   }
+  
   
   
 

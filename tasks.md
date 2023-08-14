@@ -1,5 +1,5 @@
 ## To Do
-- Implement create, edit and delete lists
+- Implement editing lists and then deleting lists and then create list button for each movie details
     - This should only be possible on a user's own profile
 - Lists should have up to 4 movie posters in them, similar to Spotify playlists
 - CSS for:
