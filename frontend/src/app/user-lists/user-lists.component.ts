@@ -5,12 +5,13 @@ import { UsersService } from '../users.service';
 import { ActivatedRoute } from '@angular/router';
 import { UserList } from '../user-list';
 import { UserListComponent } from '../user-list/user-list.component';
-import { CreateListFormComponent } from '../create-list-form/create-list-form.component';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-user-lists',
   standalone: true,
-  imports: [CreateListFormComponent, UserListComponent, CommonModule, RouterModule],
+  imports: [UserListComponent, CommonModule, RouterModule],
   templateUrl: './user-lists.component.html',
   styleUrls: ['./user-lists.component.scss']
 })
@@ -18,14 +19,29 @@ export class UserListsComponent implements OnInit{
   userId: string | null = null;
   userLists: UserList[] = [];
   showCreateListForm = false;
+  isMyProfile: boolean = false;
+  isLoggedIn: boolean = false;
+  private isLoggedInSubscription: Subscription | undefined;
 
-  constructor(private route: ActivatedRoute, private UsersService: UsersService) {}
+  constructor(private route: ActivatedRoute, private UsersService: UsersService, private authService: AuthService) {}
 
   ngOnInit(): void {
     // Getting the user's watched movies and username
     this.route.parent?.paramMap.subscribe(params => {
       this.userId = params.get('userId');
       this.getUserLists();
+
+      this.isLoggedInSubscription = this.authService.isLoggedIn().subscribe(loggedIn => {
+        this.isLoggedIn = loggedIn;
+        if (loggedIn) {
+          const authenticatedUserId = this.authService.getUserIdFromToken();
+          
+          if(this.userId != null) {
+            const userIdNum = parseInt(this.userId, 10);
+            this.isMyProfile = userIdNum === authenticatedUserId;
+          }
+        }
+      });
   });
 }
 

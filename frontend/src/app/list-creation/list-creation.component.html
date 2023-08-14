@@ -1,0 +1,31 @@
+<!-- list-creation.component.html -->
+<div class="list-creation-container">
+    <h2>Create a New List</h2>
+    <form (ngSubmit)="onCreateListSubmit()">
+      <label for="listName">List Name:</label>
+      <input type="text" id="listName" [(ngModel)]="listName" placeholder="Enter list name" required>
+  
+      <label for="movieSearch">Search Movies:</label>
+      <input type="text" id="movieSearch" [(ngModel)]="searchQuery" placeholder="Search for movies" (input)="onMovieSearch()">
+  
+      <!-- Display search results -->
+      <div class="search-results">
+        <div *ngFor="let movie of searchResults" class="movie-card" (click)="onMovieSelect(movie)">
+          <img [src]="movie.poster_path" alt="{{ movie.title }}">
+          <p>{{ movie.title }}</p>
+        </div>
+      </div>
+  
+      <!-- Display selected movies -->
+      <div class="selected-movies">
+        <div *ngFor="let movie of selectedMovies" class="selected-movie-card">
+          <img [src]="movie.poster_path" alt="{{ movie.title }}">
+          <p>{{ movie.title }}</p>
+          <button (click)="removeSelectedMovie(movie)">Remove</button>
+        </div>
+      </div>
+  
+      <button type="submit">Create List</button>
+    </form>
+  </div>
+  

@@ -1,10 +1,9 @@
 <h2>Lists</h2>
 
-<div class="create-list-form-container" *ngIf="showCreateListForm">
-  <app-create-list-form (close)="closeCreateListForm()"></app-create-list-form>
+<div *ngIf="isLoggedIn && isMyProfile">
+  <button [routerLink]="['/create-list']">Create New List</button>
 </div>
 
-<button (click)="openCreateListForm()">Create New List</button> 
 
 <section class="results">
     <ng-container *ngIf="userLists.length > 0; else noLists">

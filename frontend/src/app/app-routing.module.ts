@@ -13,12 +13,12 @@ import { FollowingComponent } from './following/following.component';
 import { MoviesComponent } from './movies/movies.component';
 import { UserListsComponent } from './user-lists/user-lists.component';
 import { UserListMoviesComponent } from './user-list-movies/user-list-movies.component';
-import { UserList } from './user-list';
+import { ListCreationComponent } from './list-creation/list-creation.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, title: "Home"},
-  { path: 'login', component: UserLoginComponent, title: "Login", canActivate: [AuthGuard]},
-  { path: 'register', component: UserRegistrationComponent, title: "Register", canActivate: [AuthGuard] },
+  { path: 'login', component: UserLoginComponent, title: 'Login'},
+  { path: 'register', component: UserRegistrationComponent, title: 'Register' },
   { path: 'profile', component: ProfileComponent, title: "Profile"},
   { path: 'search/:query', component: SearchResultsComponent, title: "Search Results"},
   { path: 'usersearch/:query', component: UserSearchResultsComponent, title: "User Search Results"},
@@ -32,7 +32,8 @@ const routes: Routes = [
       { path: 'lists', component: UserListsComponent, title: "Lists" },
       { path: 'lists/:listId', component: UserListMoviesComponent, data: { source: 'list' } }
     ]
-  }
+  },
+  {path: 'create-list', component: ListCreationComponent},
 ];
 
 @NgModule({

@@ -1,27 +1,32 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
-import { AuthService } from './auth.service';
+import { CanActivate, Router, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AuthService } from './auth.service';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+
+export class AuthGuard {
+  /*
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(): Observable<boolean> {
-    return this.authService.isLoggedIn$.pipe(
-      map((isLoggedIn) => {
-        // If the user is not logged in, allow access to login and register screens
-        // If the user is logged in, redirect them to the home screen
-        if (!isLoggedIn) {
-          return true;
-        } else {
-          this.router.navigate(['/']); // Redirect to the home screen if logged in
-          return false;
-        }
-      })
-    );
+  canActivate = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> => {
+    if (route.data['requiresLogin']) {
+      return this.authService.isLoggedIn$.pipe(
+        map((isLoggedIn) => {
+          if (!isLoggedIn) {
+            return true;
+          } else {
+            return this.router.createUrlTree(['/']);
+          }
+        })
+      );
+    } else {
+      
+    }
   }
+  */
 }
