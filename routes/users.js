@@ -243,5 +243,41 @@ async function fetchMovieDetails(movieId) {
 }
 
 
+// Create a new list
+router.post('/users/lists', async (req, res) => {
+  const { name, user_id } = req.body;
+
+  try {
+    const query = 'INSERT INTO user_movie_lists (list_name, user_id) VALUES (?, ?)';
+    const result = await db.query(query, [name, user_id]);
+    const listId = result[0].insertId; // Get the ID of the newly inserted list
+
+    res.status(201).json({ listId }); // Return the list ID
+  } catch (error) {
+    console.error('Error creating list:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+// Add movies to a list
+router.post('/users/list-items', async (req, res) => {
+  const listItems = req.body;
+
+  try {
+    const query = 'INSERT INTO user_movie_list_items (movie_list_id, movie_id) VALUES (?, ?)';
+    
+    // Insert each list item into the database
+    for (const listItem of listItems) {
+      await db.query(query, [listItem.movie_list_id, listItem.movie_id]);
+    }
+
+    res.status(201).json({ message: 'Movies added to list' });
+  } catch (error) {
+    console.error('Error adding movies to list:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
 
 module.exports = router;

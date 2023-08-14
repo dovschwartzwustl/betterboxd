@@ -56,7 +56,7 @@ export class ListCreationComponent implements OnInit{
   
           this.UsersService.addMoviesToList(listItems).subscribe({
             next: (result: any) => {
-              console.log('List created and movies added:', result);
+              console.log('List created and movies added:');
               this.router.navigate(['profile', this.userId, 'lists']);
             },
             error: (error) => {
