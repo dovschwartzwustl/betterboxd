@@ -6,6 +6,8 @@ import { RouterModule} from '@angular/router';
 import { UsersService } from '../users.service';
 import { Movie } from '../movie';
 import { MovieComponent } from '../movie/movie.component';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-user-list-movies',
@@ -20,19 +22,32 @@ export class UserListMoviesComponent implements OnInit {
   userId: string | null = null;
   listInfo: UserList = { id: 0, name: '' };
   movies: Movie[] = [];
+  isMyProfile: boolean = false;
+  isLoggedIn: boolean = false;
+  private isLoggedInSubscription: Subscription | undefined;
 
-  constructor(private route: ActivatedRoute, private usersService: UsersService) {}
+  constructor(private route: ActivatedRoute, private usersService: UsersService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.route.parent?.paramMap.subscribe(parentParams => {
       this.userId = parentParams.get('userId');
+      this.isLoggedInSubscription = this.authService.isLoggedIn().subscribe(loggedIn => {
+        this.isLoggedIn = loggedIn;
+        if (loggedIn) {
+          const authenticatedUserId = this.authService.getUserIdFromToken(); // Assuming you already have a method for this
+  
+          // Check if the profile is the same as the authenticated user's profile
+          
+          if(this.userId != null) {
+            const userIdNum = parseInt(this.userId, 10);
+            this.isMyProfile = userIdNum === authenticatedUserId;
+          }
+        }
+      });
     });
 
     this.route.params.subscribe(params => {
       this.listId = params['listId'];
-
-      console.log('userId:', this.userId);
-      console.log('listId:', this.listId);
 
       if (this.userId && this.listId) {
         this.usersService.getListById(this.userId, this.listId).subscribe({
@@ -46,6 +61,10 @@ export class UserListMoviesComponent implements OnInit {
         });
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.isLoggedInSubscription?.unsubscribe();
   }
 }
 
