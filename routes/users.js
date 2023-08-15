@@ -318,6 +318,37 @@ router.put('/users/list-items/:listId', async (req, res) => {
 });
 
 
+// Delete a list
+router.delete('/users/lists/:userId/:listId', async (req, res) => {
+  const userId = req.params.userId;
+  const listId = req.params.listId;
+
+  try {
+    // Check if the list exists
+    const checkQuery = 'SELECT * FROM user_movie_lists WHERE user_id = ? AND id = ?';
+    const checkResult = await db.query(checkQuery, [userId, listId]);
+
+    if (checkResult[0].length === 0) {
+      return res.status(404).json({ message: 'List not found' });
+    }
+
+    // Delete list items first
+    const deleteListItemsQuery = 'DELETE FROM user_movie_list_items WHERE movie_list_id = ?';
+    await db.query(deleteListItemsQuery, [listId]);
+
+    // Delete the list
+    const deleteListQuery = 'DELETE FROM user_movie_lists WHERE user_id = ? AND id = ?';
+    await db.query(deleteListQuery, [userId, listId]);
+
+    res.status(200).json({ message: 'List deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting list:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+
 
 
 module.exports = router;

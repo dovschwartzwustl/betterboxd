@@ -44,6 +44,7 @@ export class ListEditComponent {
         this.UsersService.getListById(this.userId, this.listId).subscribe({
           next: (response: any) => {
             this.listName = response.list.name;
+            this.description = response.list.description;
             this.selectedMovies = response.movies;
           },
           error: (error) => {

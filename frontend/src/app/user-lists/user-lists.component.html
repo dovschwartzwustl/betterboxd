@@ -9,6 +9,10 @@
     <ng-container *ngIf="userLists.length > 0; else noLists">
       <a *ngFor="let list of userLists" [routerLink]="['/profile', userId, 'lists', list.id]" (click)="onListClick(list)">
         <app-user-list [list]="list"></app-user-list>
+        <div *ngIf="isLoggedIn && isMyProfile">
+          <a [routerLink]="['/edit-list', list.id]"><button>Edit</button></a> 
+          <a><button>Delete</button></a>
+        </div>
       </a>
     </ng-container>
     <ng-template #noLists>

@@ -123,7 +123,8 @@ export class UsersService {
     return this.http.put<any>(`${this.baseUrl}/list-items/${listId}`, listItems);
   }
 
-  
-  
+  deleteList(userId: string, listId: string): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/lists/${userId}/${listId}`);
+  }
 
 }
