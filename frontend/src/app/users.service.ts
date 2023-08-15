@@ -79,7 +79,7 @@ export class UsersService {
     );
   }
 
-  //Change
+  
   getUserLists(userId: string): Observable<UserList[]> {
     return this.http.get<any>(`${this.baseUrl}/lists/${userId}`).pipe(
       map(response => response.lists)
@@ -93,13 +93,15 @@ export class UsersService {
         return {
           list: {
             id: list.id,
-            name: list.list_name
+            name: list.list_name,
+            description: list.description
           },
           movies: movies
         };
       })
     );
   }
+  
 
   createList(name: string, userId: string, description?: string): Observable<any> {
     const newList = { name, user_id: userId, description };
@@ -107,11 +109,20 @@ export class UsersService {
   }
   
   
-
-
   addMoviesToList(listItems: any[]): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/list-items`, listItems);
   }
+
+
+  updateList(listId: string, name: string, description?: string): Observable<any> {
+    const updatedList = { name, description, list_id: listId };
+    return this.http.put<any>(`${this.baseUrl}/lists/${listId}`, updatedList);
+  }
+
+  updateListItems(listId: string, listItems: any[]): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/list-items/${listId}`, listItems);
+  }
+
   
   
 

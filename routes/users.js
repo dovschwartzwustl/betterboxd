@@ -192,16 +192,16 @@ router.get('/users/lists/:userId', async (req, res) => {
 
 //get a user list by its ID
 router.get('/users/lists/:userId/:listId', async (req, res) => {
-  console.log("gettings user list by id");
+  console.log("getting user list by id");
   const userId = req.params.userId;
   const listId = req.params.listId;
 
   try {
-    const query = 'SELECT id, list_name FROM user_movie_lists WHERE user_id = ? AND id = ?';
+    const query = 'SELECT id, list_name, description FROM user_movie_lists WHERE user_id = ? AND id = ?';
     const results = await db.query(query, [userId, listId]);
     console.log(results);
     const list = results[0][0];
-    
+
     if (!list) {
       res.status(404).json({ message: 'List not found' });
     } else {
@@ -221,6 +221,7 @@ router.get('/users/lists/:userId/:listId', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
 
 async function fetchMovieDetails(movieId) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
@@ -277,6 +278,45 @@ router.post('/users/list-items', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
+// Update an existing list
+router.put('/users/lists/:listId', async (req, res) => {
+  const { listId } = req.params;
+  const { name, description } = req.body;
+
+  try {
+    const query = 'UPDATE user_movie_lists SET list_name = ?, description = ? WHERE id = ?';
+    await db.query(query, [name, description, listId]);
+
+    res.status(200).json({ message: 'List updated successfully' });
+  } catch (error) {
+    console.error('Error updating list:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+// Update movies in an existing list
+router.put('/users/list-items/:listId', async (req, res) => {
+  const { listId } = req.params;
+  const listItems = req.body;
+
+  try {
+    const deleteQuery = 'DELETE FROM user_movie_list_items WHERE movie_list_id = ?';
+    await db.query(deleteQuery, [listId]);
+
+    const insertQuery = 'INSERT INTO user_movie_list_items (movie_list_id, movie_id) VALUES (?, ?)';
+    // Insert each list item into the database
+    for (const listItem of listItems) {
+      await db.query(insertQuery, [listId, listItem.movie_id]);
+    }
+
+    res.status(200).json({ message: 'List items updated successfully' });
+  } catch (error) {
+    console.error('Error updating list items:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 
 
 

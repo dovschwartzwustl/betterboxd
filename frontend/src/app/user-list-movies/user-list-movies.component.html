@@ -1,7 +1,7 @@
 <h2>{{listInfo.name}}</h2>
 
 <div *ngIf="isLoggedIn && isMyProfile">
-  <button>Edit</button>
+  <button [routerLink]="['/edit-list', listId]">Edit</button>
 </div>
 
 <section class="results" *ngIf="movies.length > 0; else noMovies">

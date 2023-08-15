@@ -14,6 +14,7 @@ import { MoviesComponent } from './movies/movies.component';
 import { UserListsComponent } from './user-lists/user-lists.component';
 import { UserListMoviesComponent } from './user-list-movies/user-list-movies.component';
 import { ListCreationComponent } from './list-creation/list-creation.component';
+import { ListEditComponent } from './list-edit/list-edit.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, title: "Home"},
@@ -34,6 +35,7 @@ const routes: Routes = [
     ]
   },
   {path: 'create-list', component: ListCreationComponent},
+  {path: 'edit-list/:listId', component: ListEditComponent}
 ];
 
 @NgModule({

@@ -1,1 +1,35 @@
-<p>list-edit works!</p>
+<div class="list-edit-container">
+    <h2>Edit List</h2>
+    <form (ngSubmit)="onEditListSubmit()">
+      <label for="listName">List Name:</label>
+      <input type="text" id="listName" name="listName" [(ngModel)]="listName" placeholder="Enter list name" required>
+      <label for="listName">Description:</label>
+      <input type="text" id="description" name="description" [(ngModel)]="description" placeholder="Describe your list">
+  
+      <label for="movieSearch">Add Movies:</label>
+      <input type="text" id="movieSearch" name="movieSearch" [(ngModel)]="searchQuery" placeholder="Search for movies" (input)="onMovieSearch()">
+  
+      <!-- Display search results -->
+      <div class="results">
+        <a *ngFor="let movie of searchResults" (click)="onMovieSelect(movie)">
+          <app-movie [movie]="movie"></app-movie>
+        </a>
+      </div>
+
+      
+  
+      <!-- Display selected movies -->
+      <div class="results">
+        <a *ngFor="let movie of selectedMovies">
+          <app-movie [movie]="movie"></app-movie>
+          <button (click)="removeSelectedMovie(movie)">Remove</button>
+        </a>
+      </div>
+
+     
+
+     
+  
+      <button type="submit">Confirm Changes</button>
+    </form>
+  </div>
