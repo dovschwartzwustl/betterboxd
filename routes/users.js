@@ -322,6 +322,7 @@ router.put('/users/list-items/:listId', async (req, res) => {
 router.delete('/users/lists/:userId/:listId', async (req, res) => {
   const userId = req.params.userId;
   const listId = req.params.listId;
+  console.log("deleting list "+ listId);
 
   try {
     // Check if the list exists

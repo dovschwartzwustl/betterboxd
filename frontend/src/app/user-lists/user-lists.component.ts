@@ -8,15 +8,15 @@ import { UserListComponent } from '../user-list/user-list.component';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
 import { Router } from '@angular/router';
+import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
 
 
 
 @Component({
   selector: 'app-user-lists',
   standalone: true,
-  imports: [UserListComponent, CommonModule, RouterModule],
+  imports: [DeleteConfirmationComponent, UserListComponent, CommonModule, RouterModule],
   templateUrl: './user-lists.component.html',
   styleUrls: ['./user-lists.component.scss']
 })
@@ -27,6 +27,9 @@ export class UserListsComponent implements OnInit{
   isMyProfile: boolean = false;
   isLoggedIn: boolean = false;
   private isLoggedInSubscription: Subscription | undefined;
+  private deleteListSubscription: Subscription | undefined;
+  deleteConfirmationVisible = false;
+  listToDeleteId: string | null = null;
 
   constructor(private route: ActivatedRoute, private UsersService: UsersService, private authService: AuthService, private dialog: MatDialog, private router: Router) {}
 
@@ -67,10 +70,6 @@ export class UserListsComponent implements OnInit{
     }
   }
 
-  onListClick(list: UserList): void {
-    console.log('Clicked list:', list); // Add this line
-  }
-
   openCreateListForm() {
     this.showCreateListForm = true;
   }
@@ -80,24 +79,33 @@ export class UserListsComponent implements OnInit{
   }
 
   openDeleteConfirmationDialog(listId: number): void {
-    const dialogRef = this.dialog.open(DeleteConfirmationComponent, {
-      data: 'Are you sure you want to delete this list?'
-    });
-  
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true && this.userId) {
-        this.UsersService.deleteList(this.userId, listId.toString()).subscribe({
-          next: () => {
-            console.log('List deleted successfully');
-            this.router.navigate(['/']); // Navigate to the home page
-          },
-          error: (error) => {
-            console.error('Error deleting list:', error);
-          }
-        });
-      }
-    });
+    this.listToDeleteId = listId.toString();
+    this.deleteConfirmationVisible = true;
   }
+
+  onDeleteConfirmed(confirmed: boolean): void {
+    if (confirmed && this.listToDeleteId && this.userId) {
+      // Perform the deletion logic here
+      this.deleteListSubscription = this.UsersService.deleteList(this.userId, this.listToDeleteId).subscribe({
+        next: () => {
+          this.listToDeleteId = null;
+          this.deleteConfirmationVisible = false;
+          this.getUserLists();
+        },
+        error: (error) => {
+          console.error('Error deleting list:', error);
+        }
+      });
+    } else {
+      this.listToDeleteId = null;
+      this.deleteConfirmationVisible = false;
+    }
+  }
+  
+  ngOnDestroy(): void {
+    this.deleteListSubscription?.unsubscribe();
+  }
+  
   
 
   

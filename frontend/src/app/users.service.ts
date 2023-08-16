@@ -124,6 +124,7 @@ export class UsersService {
   }
 
   deleteList(userId: string, listId: string): Observable<any> {
+    console.log('deleteList method called with:', userId, listId);
     return this.http.delete<any>(`${this.baseUrl}/lists/${userId}/${listId}`);
   }
 

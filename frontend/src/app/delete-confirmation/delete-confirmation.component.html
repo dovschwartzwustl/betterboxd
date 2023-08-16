@@ -1,6 +1,9 @@
-<div class="confirmation-dialog">
-    <p>{{ message }}</p>
-    <button (click)="confirm()">Yes</button>
-    <button (click)="cancel()">No</button>
+<div class="delete-confirmation-modal">
+    <div class="delete-confirmation-content">
+      <p>Are you sure you want to delete this list?</p>
+      <button (click)="onConfirm()">Confirm</button>
+      <button (click)="onCancel()">Cancel</button>
+    </div>
   </div>
+  
   

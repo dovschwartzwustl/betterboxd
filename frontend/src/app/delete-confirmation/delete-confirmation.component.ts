@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, EventEmitter, Output } from '@angular/core';
+
 
 @Component({
   selector: 'app-delete-confirmation',
@@ -10,16 +10,16 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./delete-confirmation.component.scss']
 })
 export class DeleteConfirmationComponent {
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public message: string,
-    private dialogRef: MatDialogRef<DeleteConfirmationComponent>
-  ) {}
+  @Output() confirmed = new EventEmitter<boolean>();
+  @Output() cancelled = new EventEmitter<boolean>();
 
-  confirm(): void {
-    this.dialogRef.close(true);
+  onConfirm() {
+    this.confirmed.emit(true);
+    this.cancelled.emit(false);
   }
 
-  cancel(): void {
-    this.dialogRef.close(false);
+  onCancel() {
+    this.confirmed.emit(false);
+    this.cancelled.emit(true);
   }
 }
