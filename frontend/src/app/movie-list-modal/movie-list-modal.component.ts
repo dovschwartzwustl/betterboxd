@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { UserList } from '../user-list';
 import { FormsModule } from '@angular/forms';
+import { UsersService } from '../users.service';
 
 @Component({
   selector: 'app-movie-list-modal',
@@ -10,28 +11,30 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './movie-list-modal.component.html',
   styleUrls: ['./movie-list-modal.component.scss']
 })
-export class MovieListModalComponent {
+export class MovieListModalComponent implements OnInit{
   @Input() userLists: UserList[] = [];
   @Output() movieAddedToList = new EventEmitter<number>();
   @Output() movieAddedToNewList = new EventEmitter<string>();
+  @Output() confirmed = new EventEmitter<boolean>();
+
+  constructor(private UsersService: UsersService) {}
 
   selectedListId: number | undefined;
   newListName: string = '';
 
-  addMovieToList() {
-    if (this.selectedListId) {
-      this.movieAddedToList.emit(this.selectedListId);
-    }
+  ngOnInit(): void {}
+
+  onAddMovieToList() {
+    this.movieAddedToList.emit(this.selectedListId);
+    this.confirmed.emit(true);
   }
 
-  createNewListWithMovie() {
-    if (this.newListName.trim() !== '') {
-      this.movieAddedToNewList.emit(this.newListName);
-    }
+  onCreateNewListWithMovie() {
+    this.movieAddedToNewList.emit(this.newListName);
+    this.confirmed.emit(true);
   }
 
-  closeModal() {
-    this.selectedListId = undefined;
-    this.newListName = '';
+  onClose(): void {
+    this.confirmed.emit(false);
   }
 }

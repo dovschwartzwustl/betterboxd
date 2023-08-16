@@ -11,15 +11,12 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class DeleteConfirmationComponent {
   @Output() confirmed = new EventEmitter<boolean>();
-  @Output() cancelled = new EventEmitter<boolean>();
 
   onConfirm() {
     this.confirmed.emit(true);
-    this.cancelled.emit(false);
   }
 
   onCancel() {
     this.confirmed.emit(false);
-    this.cancelled.emit(true);
   }
 }

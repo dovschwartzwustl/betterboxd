@@ -27,8 +27,7 @@ export class MovieDetailsComponent implements OnInit {
   ratingOptions: number[] = [1, 2, 3, 4, 5];
   private isLoggedInSubscription: Subscription | undefined;
   @ViewChild(MovieListModalComponent) movieListModal!: MovieListModalComponent;
-
-
+  isMovieListModalOpen = false;
   
 
   constructor(private route: ActivatedRoute, private MovieService: MovieService, private AuthService: AuthService) {
@@ -133,18 +132,25 @@ export class MovieDetailsComponent implements OnInit {
     return this.MovieService.getPosterUrl(posterPath);
   }
 
-  openMovieListModal() {
-    this.movieListModal.selectedListId = undefined;
-    this.movieListModal.newListName = '';
+  openMovieModal(): void {
+    this.isMovieListModalOpen = true;
   }
 
-  addMovieToList(listId: number) {
-    console.log(`Adding movie to list: ${listId}`);
-    // Add logic to add the movie to the selected list
+  onMovieModalConfirmed(confirmed: boolean): void {
+    if (!confirmed) {
+      this.isMovieListModalOpen = false; // Close the modal
+    }
   }
 
-  createNewListAndAddMovie(newListName: string) {
-    console.log(`Creating new list and adding movie: ${newListName}`);
-    // Add logic to create a new list with the movie
+  addMovieToList(selectedListId: number): void {
+    // Add movie to the selected list
+    // ... (your logic here)
+    this.isMovieListModalOpen = false; // Close the modal
+  }
+
+  createNewListAndAddMovie(newListName: string): void {
+    // Create a new list and add the movie
+    // ... (your logic here)
+    this.isMovieListModalOpen = false; // Close the modal
   }
 }

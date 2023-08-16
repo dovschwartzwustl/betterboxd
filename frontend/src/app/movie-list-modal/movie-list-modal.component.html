@@ -1,14 +1,15 @@
-<div class="movie-list-modal">
+<div class="movie-details-modal centered-modal">
     <div class="modal-content">
-      <h2>Add Movie to List</h2>
-      <select [(ngModel)]="selectedListId">
+    <!-- Your modal content here -->
+    <h2>Add Movie to List</h2>
+    <select [(ngModel)]="selectedListId">
         <option *ngFor="let list of userLists" [value]="list.id">{{ list.name }}</option>
-      </select>
-      <button (click)="addMovieToList()">Add</button>
-      <p>or</p>
-      <input type="text" [(ngModel)]="newListName" placeholder="Enter new list name">
-      <button (click)="createNewListWithMovie()">Create and Add</button>
-      <button (click)="closeModal()">Close</button>
+    </select>
+    <button (click)="onAddMovieToList()">Add</button>
+    <p>or</p>
+    <input type="text" [(ngModel)]="newListName" placeholder="Enter new list name">
+    <button (click)="onCreateNewListWithMovie()">Create and Add</button>
+    <button (click)="onClose()">Close</button>
     </div>
-  </div>
+</div>
   
