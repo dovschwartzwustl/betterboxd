@@ -260,6 +260,24 @@ router.post('/users/lists', async (req, res) => {
   }
 });
 
+//add a SINGLE movie to a list
+router.post('/users/list-item', async (req, res) => {
+  const listItem = req.body;
+
+  try {
+    const query = 'INSERT INTO user_movie_list_items (movie_list_id, movie_id) VALUES (?, ?)';
+    
+    // Insert the single list item into the database
+    await db.query(query, [listItem.movie_list_id, listItem.movie_id]);
+
+    res.status(201).json({ message: 'Movie added to list' });
+  } catch (error) {
+    console.error('Error adding movie to list:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
 // Add movies to a list
 router.post('/users/list-items', async (req, res) => {
   const listItems = req.body;

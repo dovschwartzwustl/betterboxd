@@ -107,8 +107,13 @@ export class UsersService {
     const newList = { name, user_id: userId, description };
     return this.http.post<any>(`${this.baseUrl}/lists`, newList);
   }
+
+  //for adding ONE movie
+  addMovieToList(item: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/list-item`, item);
+  }
   
-  
+  //for adding MULTIPLE movies
   addMoviesToList(listItems: any[]): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/list-items`, listItems);
   }

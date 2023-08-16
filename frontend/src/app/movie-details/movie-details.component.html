@@ -38,9 +38,8 @@
 
 
   <ng-container *ngIf="isMovieListModalOpen">
-     <app-movie-list-modal 
-     (movieAddedToList)="addMovieToList($event)" 
-     (movieAddedToNewList)="createNewListAndAddMovie($event)"
+     <app-movie-list-modal
+     [movieId]="this.movieId" 
      (confirmed)="onMovieModalConfirmed($event)">
     </app-movie-list-modal>
   </ng-container>

@@ -3,6 +3,9 @@ import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { UserList } from '../user-list';
 import { FormsModule } from '@angular/forms';
 import { UsersService } from '../users.service';
+import { Observable } from 'rxjs';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-movie-list-modal',
@@ -13,28 +16,67 @@ import { UsersService } from '../users.service';
 })
 export class MovieListModalComponent implements OnInit{
   @Input() userLists: UserList[] = [];
+  userId: string | null = null;
+  @Input() movieId: string | null = null;
+  @Input() isLoggedIn$!: Observable<boolean>;
   @Output() movieAddedToList = new EventEmitter<number>();
   @Output() movieAddedToNewList = new EventEmitter<string>();
   @Output() confirmed = new EventEmitter<boolean>();
 
-  constructor(private UsersService: UsersService) {}
+  constructor(private UsersService: UsersService, private AuthService: AuthService, private router: Router) {
+
+  }
 
   selectedListId: number | undefined;
   newListName: string = '';
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userId = this.AuthService.getUserIdFromToken().toString();
+    if (this.userId) {
+      this.UsersService.getUserLists(this.userId).subscribe({
+        next: (response: any[]) => {
+          this.userLists = response.map(item => {
+            return { id: item.id, name: item.list_name };
+          });
+        },
+        error: (error) => {
+          console.error('Error fetching user lists:', error);
+        }
+      });
+    }
+
+    console.log("modal: user: "+ this.userId + ", movie: "+ this.movieId);
+  }
+
+
 
   onAddMovieToList() {
-    this.movieAddedToList.emit(this.selectedListId);
-    this.confirmed.emit(true);
+    const listItem = {
+      movie_list_id: this.selectedListId,
+      movie_id: this.movieId, // Replace with the actual movie ID
+    };
+
+    this.UsersService.addMovieToList(listItem).subscribe({
+      next: (response) => {
+        console.log('Movie added to list:', response);
+        this.confirmed.emit(true);
+        this.router.navigate(['profile', this.userId, 'lists', this.selectedListId]);
+
+      },
+      error: (error) => {
+        console.error('Error adding movie to list:', error);
+      },
+    });
   }
 
   onCreateNewListWithMovie() {
+
+
     this.movieAddedToNewList.emit(this.newListName);
     this.confirmed.emit(true);
   }
 
   onClose(): void {
-    this.confirmed.emit(false);
+    this.confirmed.emit(true);
   }
 }

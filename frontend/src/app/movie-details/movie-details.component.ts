@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../movies.service';
 import { AuthService } from '../auth.service';
@@ -18,7 +18,7 @@ import { MovieListModalComponent } from '../movie-list-modal/movie-list-modal.co
   styleUrls: ['./movie-details.component.scss']
 })
 
-export class MovieDetailsComponent implements OnInit {
+export class MovieDetailsComponent implements OnInit, AfterViewInit {
   movieId: string | null = null;
   rating: number | undefined = undefined;
   movie: Movie | undefined;
@@ -66,7 +66,14 @@ export class MovieDetailsComponent implements OnInit {
         
       }
     });
-    
+  }
+
+  ngAfterViewInit(): void {
+    if (this.movieListModal) {
+      console.log("passing in movieId: "+ this.movieId);
+      this.movieListModal.isLoggedIn$ = this.isLoggedIn$;
+      this.movieListModal.movieId = this.movieId;
+    }
   }
 
   ngOnDestroy(): void {
@@ -137,20 +144,8 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   onMovieModalConfirmed(confirmed: boolean): void {
-    if (!confirmed) {
-      this.isMovieListModalOpen = false; // Close the modal
+    if (confirmed) {
+      this.isMovieListModalOpen = false;
     }
-  }
-
-  addMovieToList(selectedListId: number): void {
-    // Add movie to the selected list
-    // ... (your logic here)
-    this.isMovieListModalOpen = false; // Close the modal
-  }
-
-  createNewListAndAddMovie(newListName: string): void {
-    // Create a new list and add the movie
-    // ... (your logic here)
-    this.isMovieListModalOpen = false; // Close the modal
   }
 }
