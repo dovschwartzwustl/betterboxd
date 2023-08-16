@@ -16,7 +16,7 @@
         </select>
         <button (click)="unmarkMovieAsWatched()">Watched</button>
       </div>
-      
+      <button (click)="openMovieListModal()">Add to List</button>
 
   </ng-container>
 
@@ -35,4 +35,9 @@
   <div *ngIf="!movie">
     <p>Loading movie details...</p>
   </div>
+
+  <app-movie-list-modal 
+                      (movieAddedToList)="addMovieToList($event)"
+                      (movieAddedToNewList)="createNewListAndAddMovie($event)">
+</app-movie-list-modal>
   

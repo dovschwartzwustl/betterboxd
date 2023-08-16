@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../movies.service';
 import { AuthService } from '../auth.service';
@@ -8,11 +8,12 @@ import { RouterModule } from '@angular/router';
 import { of,Observable, Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { tap } from 'rxjs/operators';
+import { MovieListModalComponent } from '../movie-list-modal/movie-list-modal.component';
 
 @Component({
   selector: 'app-movie-details',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [MovieListModalComponent, CommonModule, FormsModule, RouterModule],
   templateUrl: './movie-details.component.html',
   styleUrls: ['./movie-details.component.scss']
 })
@@ -24,8 +25,9 @@ export class MovieDetailsComponent implements OnInit {
   isLoggedIn$: Observable<boolean>;
   isMovieWatched: boolean = false;
   ratingOptions: number[] = [1, 2, 3, 4, 5];
-
   private isLoggedInSubscription: Subscription | undefined;
+  @ViewChild(MovieListModalComponent) movieListModal!: MovieListModalComponent;
+
 
   
 
@@ -129,5 +131,20 @@ export class MovieDetailsComponent implements OnInit {
 
   getPosterUrl(posterPath: string): string {
     return this.MovieService.getPosterUrl(posterPath);
+  }
+
+  openMovieListModal() {
+    this.movieListModal.selectedListId = undefined;
+    this.movieListModal.newListName = '';
+  }
+
+  addMovieToList(listId: number) {
+    console.log(`Adding movie to list: ${listId}`);
+    // Add logic to add the movie to the selected list
+  }
+
+  createNewListAndAddMovie(newListName: string) {
+    console.log(`Creating new list and adding movie: ${newListName}`);
+    // Add logic to create a new list with the movie
   }
 }
