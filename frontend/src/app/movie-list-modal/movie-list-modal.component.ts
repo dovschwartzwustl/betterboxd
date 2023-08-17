@@ -70,11 +70,42 @@ export class MovieListModalComponent implements OnInit{
   }
 
   onCreateNewListWithMovie() {
-
-
-    this.movieAddedToNewList.emit(this.newListName);
-    this.confirmed.emit(true);
+    // Create a new list with the provided name
+    if(this.userId) {
+      this.UsersService.createList(this.newListName, this.userId).subscribe({
+      next: (response) => {
+        console.log('New list created:', response);
+        
+        // Get the ID of the newly created list
+        const newListId = response.listId;
+  
+        // Add the movie to the newly created list
+        const listItem = {
+          movie_list_id: newListId,
+          movie_id: this.movieId, // Replace with the actual movie ID
+        };
+  
+        this.UsersService.addMovieToList(listItem).subscribe({
+          next: (response) => {
+            console.log('Movie added to new list:', response);
+            this.confirmed.emit(true);
+  
+            // Navigate to the new list's route
+            this.router.navigate(['profile', this.userId, 'lists', newListId]);
+          },
+          error: (error) => {
+            console.error('Error adding movie to new list:', error);
+          },
+        });
+      },
+        error: (error) => {
+          console.error('Error creating new list:', error);
+        },
+      });
+    }
+    
   }
+  
 
   onClose(): void {
     this.confirmed.emit(true);
