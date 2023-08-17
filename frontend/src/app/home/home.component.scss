@@ -1,1 +1,49 @@
+.home-page {
+    padding: 100px 0; /* Adjust padding as needed */
+  }
 
+  .statement{
+    text-align: center;
+    margin: 50px;
+  }
+
+  .filler {
+    margin: 200px;
+  }
+  
+  h1 {
+    font-size: 100px;
+    font-weight: bold;
+    color: var(--primary-color); /* Use your primary color here */
+    margin-bottom: 10px;
+  }
+  
+  p {
+    font-size: 35px;
+    color: var(--secondary-color); /* Use your secondary color here */
+    margin-bottom: 30px;
+  }
+  
+  .results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .popular-heading {
+    font-size: 36px;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+  
+  .movies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    column-gap: 14px;
+    row-gap: 14px;
+    justify-content: space-around;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  

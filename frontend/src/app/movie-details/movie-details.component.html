@@ -1,6 +1,6 @@
 <div *ngIf="movie">
     
-    <img class = "movie-poster" [src]="getPosterUrl(movie.poster_path)">
+    <img class = "movie-back-drop" [src]="getPosterUrl(movie.backdrop_path)">
     
     <ng-container *ngIf="isLoggedIn$ | async; else showLoginButton">
       <div *ngIf="!isMovieWatched">
@@ -18,7 +18,7 @@
       </div>
       <button (click)="openMovieModal()">Add to List</button>
 
-  </ng-container>
+    </ng-container>
 
   <ng-template #showLoginButton>
     <a [routerLink]="['/login']"><button>Login to Rate</button></a>

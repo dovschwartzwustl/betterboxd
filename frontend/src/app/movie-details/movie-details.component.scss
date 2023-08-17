@@ -1,8 +1,9 @@
-.movie-poster {
-    /* Set the maximum width and height for the movie posters */
-    max-width: 200px;
-    max-height: 300px;
-    /* Add some margin to center the image within the movie card */
-    margin: 0 auto;
-    display: block;
-  }
+.movie-back-drop {
+  /* Set the width to 100% to take up the entire width of the screen */
+  width: 70%;
+  /* Set the maximum height for the movie backdrop */
+  height: auto;
+  /* Add some margin to center the image within the movie card */
+  margin: 0 auto;
+  display: block;
+}

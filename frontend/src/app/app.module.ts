@@ -24,6 +24,7 @@ import { ListCreationComponent } from './list-creation/list-creation.component';
 import { ListEditComponent } from './list-edit/list-edit.component';
 import { DeleteConfirmationComponent } from './delete-confirmation/delete-confirmation.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { FooterComponent } from './footer/footer.component';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -31,7 +32,7 @@ export function tokenGetter() {
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [ BrowserModule, FormsModule, HeaderComponent, HomeComponent, UserLoginComponent, UserRegistrationComponent, ProfileComponent, SearchInputComponent, SearchResultsComponent, UserSearchInputComponent, UserSearchResultsComponent, UserComponent, FollowersComponent, FollowingComponent, UserListsComponent, UserListComponent, ListCreationComponent, ListEditComponent, DeleteConfirmationComponent, MatDialogModule, AppRoutingModule, HttpClientModule,
+  imports: [ BrowserModule, FormsModule, HeaderComponent, FooterComponent, HomeComponent, UserLoginComponent, UserRegistrationComponent, ProfileComponent, SearchInputComponent, SearchResultsComponent, UserSearchInputComponent, UserSearchResultsComponent, UserComponent, FollowersComponent, FollowingComponent, UserListsComponent, UserListComponent, ListCreationComponent, ListEditComponent, DeleteConfirmationComponent, MatDialogModule, AppRoutingModule, HttpClientModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

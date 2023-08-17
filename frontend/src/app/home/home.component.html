@@ -1,7 +1,19 @@
 
-  <h1>Popular Now</h1>
+<div class="home-page">
+  <div class="statement">
+    <h1>BetterBoxd</h1>
+    <p>Explore and connect with your favorite movies.</p>
+  </div>
+
+  <div class="filler"></div>
+  
   <section class="results">
-    <a *ngFor="let movie of movies" [routerLink]="['/movie', movie.id]">
-      <app-movie [movie]="movie"></app-movie>
-    </a>
+    <h3 class="popular-heading">Popular Now</h3>
+    <div class="movies-grid">
+      <a *ngFor="let movie of movies" [routerLink]="['/movie', movie.id]" class="movie-link">
+        <app-movie [movie]="movie"></app-movie>
+      </a>
+    </div>
   </section>
+</div>
+<app-footer></app-footer>

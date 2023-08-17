@@ -6,6 +6,7 @@ import { SearchInputComponent } from '../search-input/search-input.component';
 import { UserSearchInputComponent } from '../user-search-input/user-search-input.component';
 import { Movie } from '../movie';
 import { RouterModule } from '@angular/router';
+import { FooterComponent } from '../footer/footer.component';
 
 
 interface ApiResponse {
@@ -16,7 +17,7 @@ interface ApiResponse {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, MovieComponent, SearchInputComponent, UserSearchInputComponent],
+  imports: [FooterComponent, CommonModule, RouterModule, MovieComponent, SearchInputComponent, UserSearchInputComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
