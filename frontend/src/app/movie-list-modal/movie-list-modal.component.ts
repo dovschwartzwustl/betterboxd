@@ -6,11 +6,12 @@ import { UsersService } from '../users.service';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { UserListComponent } from '../user-list/user-list.component';
 
 @Component({
   selector: 'app-movie-list-modal',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [UserListComponent, FormsModule, CommonModule],
   templateUrl: './movie-list-modal.component.html',
   styleUrls: ['./movie-list-modal.component.scss']
 })
@@ -22,6 +23,8 @@ export class MovieListModalComponent implements OnInit{
   @Output() movieAddedToList = new EventEmitter<number>();
   @Output() movieAddedToNewList = new EventEmitter<string>();
   @Output() confirmed = new EventEmitter<boolean>();
+  @Output() listSelected = new EventEmitter<number>();
+
 
   constructor(private UsersService: UsersService, private AuthService: AuthService, private router: Router) {
 
@@ -46,6 +49,13 @@ export class MovieListModalComponent implements OnInit{
     }
 
     console.log("modal: user: "+ this.userId + ", movie: "+ this.movieId);
+  }
+
+  onListSelected(listId: number) {
+    console.log("Selected list:", listId);
+  
+    // Store the selected list ID in the component property
+    this.selectedListId = listId;
   }
 
 

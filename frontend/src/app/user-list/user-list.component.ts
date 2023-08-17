@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserList } from '../user-list';
 import { Router } from '@angular/router';
@@ -13,6 +13,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class UserListComponent {
   @Input() list!: UserList;
+  @Output() listSelected = new EventEmitter<number>();
+  isSelected: boolean = false;
+
 
   constructor(private route: ActivatedRoute, private router: Router) {}
 
@@ -24,4 +27,10 @@ export class UserListComponent {
     // Navigate to the route with queryParams
     this.router.navigate(['/lists', listId], { queryParams: { list: JSON.stringify(list) } });
   }
+
+  selectList(listId: number): void {
+    this.listSelected.emit(listId);
+  }
+
+
 }

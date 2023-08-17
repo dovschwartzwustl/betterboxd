@@ -6,3 +6,13 @@
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
+.user-list-item {
+    cursor: pointer;
+    /* Add any other styles you want */
+  }
+
+  .selected {
+    background-color: #3364cd; /* Change to your desired selected color */
+    /* Add any other styling you want for a selected list */
+  }
