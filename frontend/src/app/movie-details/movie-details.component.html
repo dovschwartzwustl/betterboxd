@@ -9,9 +9,9 @@
       </div>
       <div class="interactives">
         <ng-container *ngIf="isLoggedIn$ | async; else showLoginButton">
-          <ng-container *ngIf="!isMovieWatched; else isMovieWatchedSection">
-            <p>Your Rating:</p>
-            <select [(ngModel)]="rating" (change)="rateMovieAndMarkAsWatched()">
+          <ng-container *ngIf="!isMovieWatched; else isMovieWatchedSection" class="rating">
+            <p class="your-rating">Your Rating:</p>
+            <select [(ngModel)]="rating" (change)="rateMovieAndMarkAsWatched()" class="rating-select">
               <option *ngFor="let ratingOption of ratingOptions" [value]="ratingOption">{{ ratingOption }}</option>
             </select>
           </ng-container>
@@ -20,9 +20,9 @@
             <select [(ngModel)]="rating" (change)="updateRating()">
               <option *ngFor="let ratingOption of ratingOptions" [value]="ratingOption">{{ ratingOption }}</option>
             </select>
-            <button (click)="unmarkMovieAsWatched()">Watched</button>
+            <button (click)="unmarkMovieAsWatched()" class="primary">Watched</button>
           </ng-template>
-          <button (click)="openMovieModal()" class="add-to-list-button">Add to List</button>
+          <button (click)="openMovieModal()" class="add-to-list-button" class="primary">Add to List</button>
         </ng-container>
       </div>
     </div>

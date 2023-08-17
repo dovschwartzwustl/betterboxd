@@ -26,12 +26,17 @@
   flex-direction: column;
   align-items: flex-start;
   border: 1px solid #ccc; /* Add a border for encapsulation */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow */
+  //box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 20px; /* Add padding */
   box-sizing: border-box;
+  margin-top: 10px;
 }
 
-
+//FIX
+.rating {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 
 
 .movie-back-drop {
@@ -46,6 +51,7 @@
 
 .add-to-list-button {
   margin-top: 10px;
+  background-color: var(--primary-color);
 }
 
 .loading-message {
