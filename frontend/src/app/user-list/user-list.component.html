@@ -1,4 +1,4 @@
-<div class="user-list-item" (click)="selectList(list.id)">
+<div class="user-list-item" (click)="selectList(list.id)" [class.selected]="isSelectedInput">
   <section class="user-list-card">
     <h2>{{list.name}}</h2>
   </section>

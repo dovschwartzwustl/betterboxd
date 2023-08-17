@@ -9,10 +9,16 @@
 
 .user-list-item {
     cursor: pointer;
-    /* Add any other styles you want */
+    position: relative;
   }
 
-  .selected {
-    background-color: #3364cd; /* Change to your desired selected color */
-    /* Add any other styling you want for a selected list */
-  }
+
+  .user-list-item.selected .user-list-card {
+    background-color: var(--primary-color); /* Change to your desired background color */
+    color: white; /* Change to your desired text color */
+}
+
+
+
+
+

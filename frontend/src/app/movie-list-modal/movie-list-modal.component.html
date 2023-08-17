@@ -2,13 +2,11 @@
     <div class="modal-content">
     <!-- Your modal content here -->
     <h2>Add Movie to List</h2>
+    
     <div class="user-list-grid">
-        <app-user-list
-          *ngFor="let list of userLists"
-          [list]="list"
-          [class.selected]="selectedListId === list.id"
-          (listSelected)="onListSelected($event)"
-        ></app-user-list>
+      <a *ngFor="let list of userLists" [class.selected]="selectedListId === list.id">
+        <app-user-list [list]="list" (listSelected)="onListSelected($event)" [isSelectedInput]="selectedListId === list.id"></app-user-list>
+    </a>  
     </div>
     <button (click)="onAddMovieToList()">Add</button>
     <p>or</p>

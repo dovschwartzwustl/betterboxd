@@ -24,14 +24,15 @@ export class MovieListModalComponent implements OnInit{
   @Output() movieAddedToNewList = new EventEmitter<string>();
   @Output() confirmed = new EventEmitter<boolean>();
   @Output() listSelected = new EventEmitter<number>();
+  selectedListId: number | undefined;
+  newListName: string = '';
 
 
   constructor(private UsersService: UsersService, private AuthService: AuthService, private router: Router) {
 
   }
 
-  selectedListId: number | undefined;
-  newListName: string = '';
+
 
   ngOnInit(): void {
     this.userId = this.AuthService.getUserIdFromToken().toString();

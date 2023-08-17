@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class UserListComponent {
   @Input() list!: UserList;
+  @Input() isSelectedInput = false; 
   @Output() listSelected = new EventEmitter<number>();
   isSelected: boolean = false;
 
