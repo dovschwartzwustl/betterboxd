@@ -1,47 +1,48 @@
-<div *ngIf="movie">
-    
-    <img class = "movie-back-drop" [src]="getPosterUrl(movie.backdrop_path)">
-    
-    <ng-container *ngIf="isLoggedIn$ | async; else showLoginButton">
-      <div *ngIf="!isMovieWatched">
-        <p>Your Rating:</p>
-        <select [(ngModel)]="rating" (change)="rateMovieAndMarkAsWatched()">
-          <option *ngFor="let ratingOption of ratingOptions" [value]="ratingOption">{{ ratingOption }}</option>
-        </select>
+<div class="movie-details-container">
+  <div *ngIf="movie; else loadingMovieDetails">
+    <img class="movie-back-drop" [src]="getPosterUrl(movie.backdrop_path)">
+    <div class="content">
+      <div class="movie-info">
+        <h2>{{ movie.title }}</h2>
+        <p>{{ movie.overview }}</p>
+        <p>Release Date: {{ movie.release_date }}</p>
       </div>
-      <div *ngIf="isMovieWatched">
-        <p>Your Rating:</p>
-        <select [(ngModel)]="rating" (change)="updateRating()">
-          <option *ngFor="let ratingOption of ratingOptions" [value]="ratingOption">{{ ratingOption }}</option>
-        </select>
-        <button (click)="unmarkMovieAsWatched()">Watched</button>
+      <div class="interactives">
+        <ng-container *ngIf="isLoggedIn$ | async; else showLoginButton">
+          <ng-container *ngIf="!isMovieWatched; else isMovieWatchedSection">
+            <p>Your Rating:</p>
+            <select [(ngModel)]="rating" (change)="rateMovieAndMarkAsWatched()">
+              <option *ngFor="let ratingOption of ratingOptions" [value]="ratingOption">{{ ratingOption }}</option>
+            </select>
+          </ng-container>
+          <ng-template #isMovieWatchedSection>
+            <p>Your Rating:</p>
+            <select [(ngModel)]="rating" (change)="updateRating()">
+              <option *ngFor="let ratingOption of ratingOptions" [value]="ratingOption">{{ ratingOption }}</option>
+            </select>
+            <button (click)="unmarkMovieAsWatched()">Watched</button>
+          </ng-template>
+          <button (click)="openMovieModal()" class="add-to-list-button">Add to List</button>
+        </ng-container>
       </div>
-      <button (click)="openMovieModal()">Add to List</button>
+    </div>
+    
+    
 
-    </ng-container>
+    <ng-template #showLoginButton>
+      <a [routerLink]="['/login']"><button>Login to Rate</button></a>
+    </ng-template>
 
-  <ng-template #showLoginButton>
-    <a [routerLink]="['/login']"><button>Login to Rate</button></a>
+
+  </div>
+  
+  <ng-template #loadingMovieDetails>
+    <div class="loading-message">
+      <p>Loading movie details...</p>
+    </div>
   </ng-template>
- 
-    
-    
-    <h2>{{ movie.title }}</h2>
-    <p>Release Date: {{ movie.release_date }}</p>
-    <p>Overview: {{ movie.overview }}</p>
-    <p>Vote Average: {{ movie.vote_average }}</p>
-  </div>
-  
-  <div *ngIf="!movie">
-    <p>Loading movie details...</p>
-  </div>
+</div>
 
-
-  <ng-container *ngIf="isMovieListModalOpen">
-     <app-movie-list-modal
-     [movieId]="this.movieId" 
-     (confirmed)="onMovieModalConfirmed($event)">
-    </app-movie-list-modal>
-  </ng-container>
- 
-  
+<ng-container *ngIf="isMovieListModalOpen">
+  <app-movie-list-modal [movieId]="this.movieId" (confirmed)="onMovieModalConfirmed($event)"></app-movie-list-modal>
+</ng-container>

@@ -1,9 +1,55 @@
+.movie-details-container {
+  
+  width: 60%; /* 80% of the viewport width */
+  margin: 0 auto; /* Center horizontally */
+  border: 1px solid #ccc; /* Add a border for encapsulation */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow */
+  padding: 20px; /* Add padding */
+  box-sizing: border-box; /* Include padding and border in total width */
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.movie-info {
+  flex: 1;
+  padding-right: 20px;
+}
+
+.interactives {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 1px solid #ccc; /* Add a border for encapsulation */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow */
+  padding: 20px; /* Add padding */
+  box-sizing: border-box;
+}
+
+
+
+
 .movie-back-drop {
-  /* Set the width to 100% to take up the entire width of the screen */
-  width: 70%;
-  /* Set the maximum height for the movie backdrop */
+  width: 100%;
   height: auto;
-  /* Add some margin to center the image within the movie card */
+  max-width: 100%;
   margin: 0 auto;
   display: block;
+  position: relative;
+  z-index: 1;
 }
+
+.add-to-list-button {
+  margin-top: 10px;
+}
+
+.loading-message {
+  text-align: center;
+}
+
+
