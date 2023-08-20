@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Movie } from '../movie';
 import { MovieComponent } from '../movie/movie.component';
+import { TabService } from '../tabs.service';
 
 @Component({
   selector: 'app-movies',
@@ -18,9 +19,10 @@ export class MoviesComponent implements OnInit{
   source: string | null = null;
   movies: Movie[] = [];
 
-  constructor(private route: ActivatedRoute, private MovieService: MovieService) {}
+  constructor(private route: ActivatedRoute, private MovieService: MovieService, private tabService: TabService) {}
 
   ngOnInit(): void {
+    this.tabService.setActiveTabIndex(2);
     this.route.parent?.paramMap.subscribe(params => {
       this.userId = params.get('userId');
       this.source = this.route.snapshot.data['source']; // Read the 'source' parameter

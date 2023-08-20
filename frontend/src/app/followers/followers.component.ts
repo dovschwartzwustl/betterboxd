@@ -6,6 +6,7 @@ import { User } from '../user';
 import { UserComponent } from '../user/user.component';
 import { RouterModule } from '@angular/router';
 import { map } from 'rxjs';
+import { TabService } from '../tabs.service';
 
 @Component({
   selector: 'app-followers',
@@ -18,9 +19,10 @@ export class FollowersComponent implements OnInit {
   userId: string | null = null;
   followers: User[] = [];
 
-  constructor(private route: ActivatedRoute, private UsersService: UsersService) { }
+  constructor(private route: ActivatedRoute, private UsersService: UsersService, private tabService: TabService) { }
 
   ngOnInit(): void {
+    this.tabService.setActiveTabIndex(0);
     this.route.parent?.paramMap.subscribe(params => {
       this.userId = params.get('userId');
       this.UsersService.getFollowers(this.userId!).subscribe({

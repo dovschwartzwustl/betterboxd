@@ -10,6 +10,7 @@ import { AuthService } from '../auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
+import { TabService } from '../tabs.service';
 
 
 
@@ -31,10 +32,11 @@ export class UserListsComponent implements OnInit{
   deleteConfirmationVisible = false;
   listToDeleteId: string | null = null;
 
-  constructor(private route: ActivatedRoute, private UsersService: UsersService, private authService: AuthService, private dialog: MatDialog, private router: Router) {}
+  constructor(private route: ActivatedRoute, private UsersService: UsersService, private authService: AuthService, private dialog: MatDialog, private router: Router, private tabService: TabService) {}
 
   ngOnInit(): void {
     // Getting the user's watched movies and username
+    this.tabService.setActiveTabIndex(3);
     this.route.parent?.paramMap.subscribe(params => {
       this.userId = params.get('userId');
       this.getUserLists();

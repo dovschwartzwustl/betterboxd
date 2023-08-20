@@ -17,3 +17,8 @@
     font-size: 50px;
     margin-left: 20px;
 }
+
+.tabs a button.active {
+    background-color: var(--primary-color); /* Change this to your desired color */
+    color: white;
+  }

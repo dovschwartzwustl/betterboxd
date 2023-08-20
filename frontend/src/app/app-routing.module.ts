@@ -27,7 +27,7 @@ const routes: Routes = [
   { path: 'profile/:userId', component: ProfileComponent,
     children: [
       { path: '', redirectTo: 'movies', pathMatch: 'full' },
-      { path: 'followers', component: FollowersComponent, title: "Follwers"},
+      { path: 'followers', component: FollowersComponent, title: "Followers"},
       { path: 'following', component: FollowingComponent, title: "Following" },
       { path: 'movies', component: MoviesComponent, data: { source: 'watched' }, title: "Watched Movies"},
       { path: 'lists', component: UserListsComponent, title: "Lists" },

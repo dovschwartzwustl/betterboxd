@@ -1,10 +1,10 @@
 <div class="header">
   <h1 id="username">{{username}}</h1>
   <div class="tabs">
-    <a [routerLink]="['/profile', userId, 'followers']"><button class="shadow">Followers: {{followerCount}}</button></a>
-    <a [routerLink]="['/profile', userId, 'following']"><button class="shadow">Following: {{followingCount}}</button></a>
-    <a [routerLink]="['/profile', userId, 'movies']"><button class="shadow">Movies</button></a>
-    <a [routerLink]="['/profile', userId, 'lists']"><button class="shadow">Lists</button></a>
+    <a [routerLink]="['/profile', userId, 'followers']"><button class="shadow" [class.active]="activeTabIndex === 0">Followers: {{followerCount}}</button></a>
+    <a [routerLink]="['/profile', userId, 'following']"><button class="shadow" [class.active]="activeTabIndex === 1">Following: {{followingCount}}</button></a>
+    <a [routerLink]="['/profile', userId, 'movies']"><button class="shadow" [class.active]="activeTabIndex === 2">Movies</button></a>
+    <a [routerLink]="['/profile', userId, 'lists']"><button class="shadow" [class.active]="activeTabIndex === 3">Lists</button></a>
   </div>
   <div *ngIf="isLoggedIn && !isMyProfile">
     <!-- Show follow/unfollow button -->

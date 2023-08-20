@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { UsersService } from '../users.service';
 import { Subscription } from 'rxjs';
 import { MoviesComponent } from '../movies/movies.component';
+import { TabService } from '../tabs.service';
 
 @Component({
   selector: 'app-profile',
@@ -25,12 +26,14 @@ export class ProfileComponent implements OnInit {
   isMyProfile: boolean = false;
   isLoggedIn: boolean = false;
   private isLoggedInSubscription: Subscription | undefined;
+  activeTabIndex: number = 2;
 
-  constructor(private route: ActivatedRoute, private authService: AuthService, private MovieService: MovieService, private UsersService: UsersService) { 
-    
-  }
+  constructor(private route: ActivatedRoute, private authService: AuthService, private MovieService: MovieService, private UsersService: UsersService, private tabService: TabService) {}
 
   ngOnInit(): void {
+    this.tabService.activeTabIndex$.subscribe(index => {
+      this.activeTabIndex = index;
+    });
     // Getting the user's watched movies and username
     this.route.paramMap.subscribe(params => {
       this.userId = params.get('userId');
@@ -127,6 +130,8 @@ export class ProfileComponent implements OnInit {
     });
   }
   
-
+  selectTab(tabIndex: number) {
+    this.activeTabIndex = tabIndex;
+  }
   
 }
