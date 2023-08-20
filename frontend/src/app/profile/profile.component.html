@@ -1,26 +1,26 @@
-<h1>{{username}}</h1>
-
-<div class="following">
-  <a [routerLink]="['/profile', userId, 'followers']"><p>Followers: {{followerCount}}</p></a>
-  <a [routerLink]="['/profile', userId, 'following']"><p>Following: {{followingCount}}</p></a>
-  <a [routerLink]="['/profile', userId, 'movies']"><p>Movies</p></a>
-  <a [routerLink]="['/profile', userId, 'lists']"><p>Lists</p></a>
+<div class="header">
+  <h1 id="username">{{username}}</h1>
+  <div class="tabs">
+    <a [routerLink]="['/profile', userId, 'followers']"><button class="shadow">Followers: {{followerCount}}</button></a>
+    <a [routerLink]="['/profile', userId, 'following']"><button class="shadow">Following: {{followingCount}}</button></a>
+    <a [routerLink]="['/profile', userId, 'movies']"><button class="shadow">Movies</button></a>
+    <a [routerLink]="['/profile', userId, 'lists']"><button class="shadow">Lists</button></a>
+  </div>
+  <div *ngIf="isLoggedIn && !isMyProfile">
+    <!-- Show follow/unfollow button -->
+    <button (click)="toggleFollowUser()">
+      {{ isFollowing ? 'Unfollow' : 'Follow' }}
+    </button>
+  </div>
+  <div *ngIf="isLoggedIn && isMyProfile">
+    <!-- This is your own profile, no button -->
+  </div>
+  <div *ngIf="!isLoggedIn">
+    <!-- Show "Log in to follow" message -->
+    <button [routerLink]="['/login']">Log in to follow this user</button>
+  </div>
 </div>
 
-
-<div *ngIf="isLoggedIn && !isMyProfile">
-  <!-- Show follow/unfollow button -->
-  <button (click)="toggleFollowUser()">
-    {{ isFollowing ? 'Unfollow' : 'Follow' }}
-  </button>
-</div>
-<div *ngIf="isLoggedIn && isMyProfile">
-  <!-- This is your own profile, no button -->
-</div>
-<div *ngIf="!isLoggedIn">
-  <!-- Show "Log in to follow" message -->
-  <button [routerLink]="['/login']">Log in to follow this user</button>
-</div>
 
 
 

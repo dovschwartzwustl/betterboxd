@@ -8,7 +8,7 @@
   <div class="filler"></div>
   
   <section class="results">
-    <h3 class="popular-heading">Popular Now</h3>
+    <h3 class="movie-results-heading">Popular Now</h3>
     <div class="movies-grid">
       <a *ngFor="let movie of movies" [routerLink]="['/movie', movie.id]" class="movie-link">
         <app-movie [movie]="movie"></app-movie>

@@ -1,0 +1,19 @@
+.header {
+    margin: 20px;
+}
+.tabs {
+    column-gap: 14px;
+    row-gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 400px));
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 20px;
+    *{
+        margin: 5px;
+    }
+}
+
+#username {
+    font-size: 50px;
+    margin: 10px;
+}
