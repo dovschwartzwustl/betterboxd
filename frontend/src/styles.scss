@@ -14,11 +14,23 @@
     --shadow-color: #E8E8E8;      /* Light gray shadow */
   }
   
+  button {
+    cursor: pointer;
+    font-size: 17px;
+  }
   button.primary {
     padding: 10px;
     border: solid 1px var(--primary-color);
     background: var(--primary-color);
     color: white;
+    border-radius: 8px;
+  }
+
+  button.shadow {
+    padding: 10px;
+    border: solid 1px var(--shadow-color);
+    background: var(--shadow-color);
+    color: black;
     border-radius: 8px;
   }
 

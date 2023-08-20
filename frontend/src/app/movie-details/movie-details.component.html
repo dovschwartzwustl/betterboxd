@@ -3,24 +3,28 @@
     <img class="movie-back-drop" [src]="getPosterUrl(movie.backdrop_path)">
     <div class="content">
       <div class="movie-info">
-        <h2>{{ movie.title }}</h2>
-        <p>{{ movie.overview }}</p>
-        <p>Release Date: {{ movie.release_date }}</p>
+        <h2 id="movie-title">{{ movie.title }}</h2>
+        <p id="movie-overview">{{ movie.overview }}</p>
+        <p id="movie-release-date">Release Date: {{ movie.release_date }}</p>
       </div>
       <div class="interactives">
         <ng-container *ngIf="isLoggedIn$ | async; else showLoginButton">
-          <ng-container *ngIf="!isMovieWatched; else isMovieWatchedSection" class="rating">
-            <p class="your-rating">Your Rating:</p>
-            <select [(ngModel)]="rating" (change)="rateMovieAndMarkAsWatched()" class="rating-select">
-              <option *ngFor="let ratingOption of ratingOptions" [value]="ratingOption">{{ ratingOption }}</option>
-            </select>
+          <ng-container *ngIf="!isMovieWatched; else isMovieWatchedSection">
+            <div class="rating">
+              <p class="your-rating">Your Rating:</p>
+              <select [(ngModel)]="rating" (change)="rateMovieAndMarkAsWatched()" class="rating-select">
+                <option *ngFor="let ratingOption of ratingOptions" [value]="ratingOption">{{ ratingOption }}</option>
+              </select>
+            </div>
           </ng-container>
           <ng-template #isMovieWatchedSection>
-            <p>Your Rating:</p>
-            <select [(ngModel)]="rating" (change)="updateRating()">
-              <option *ngFor="let ratingOption of ratingOptions" [value]="ratingOption">{{ ratingOption }}</option>
-            </select>
-            <button (click)="unmarkMovieAsWatched()" class="primary">Watched</button>
+            <div class="rating">
+              <p class="your-rating">Your Rating:</p>
+              <select [(ngModel)]="rating" (change)="updateRating()" class="rating-select">
+                <option *ngFor="let ratingOption of ratingOptions" [value]="ratingOption">{{ ratingOption }}</option>
+              </select>
+              <button (click)="unmarkMovieAsWatched()" class="shadow">Unwatch</button>
+            </div>
           </ng-template>
           <button (click)="openMovieModal()" class="add-to-list-button" class="primary">Add to List</button>
         </ng-container>
