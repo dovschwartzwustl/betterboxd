@@ -1,7 +1,8 @@
-<h2>Followers</h2>
-
 <section class="results">
-  <a *ngFor="let user of followers" [routerLink]="['/profile', user.id]">
-    <app-user [user]="user"></app-user>
-  </a>
+  <h2 class="results-heading">Followers</h2>
+  <div class="users-grid">
+    <a *ngFor="let user of followers" [routerLink]="['/profile', user.id]">
+      <app-user [user]="user"></app-user>
+    </a>
+  </div>
 </section>

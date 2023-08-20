@@ -1,20 +1,17 @@
-.results {
-    display: grid;
-    column-gap: 14px;
-    row-gap: 14px;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 400px));
-    margin-top: 50px;
-    justify-content: space-around;
-  }
-
-  .create-list-form-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+.user-list-with-buttons {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-  }
+    justify-content: flex-start;
+}
+
+.edit-delete-buttons *{
+    margin: 2px;
+}
+
+#new-list-button {
+    align-self: flex-start;
+    margin-right: auto; /* Push the button to the left */
+    padding: 5px 10px;
+    border-radius: 6px;
+}

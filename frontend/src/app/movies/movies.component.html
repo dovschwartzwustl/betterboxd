@@ -1,11 +1,10 @@
  <section class="results">
-    <h2 *ngIf="source === 'watched'" class="movie-results-heading">Watched Movies</h2>
+    <h2 *ngIf="source === 'watched'" class="results-heading">Watched Movies</h2>
     <div class="movies-grid">
       <a *ngFor="let movie of movies" [routerLink]="['/movie', movie.id]">
         <app-movie [movie]="movie"></app-movie>
       </a> 
     </div>
-    
   </section>
 
 

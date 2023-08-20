@@ -1,24 +1,33 @@
-<h2>Lists</h2>
 
-<div *ngIf="isLoggedIn && isMyProfile">
-  <button [routerLink]="['/create-list']">Create New List</button>
-</div>
+
+
+
 
 
 <section class="results">
-    <ng-container *ngIf="userLists.length > 0; else noLists">
+  <ng-container *ngIf="isLoggedIn && isMyProfile">
+    <button [routerLink]="['/create-list']" class="primary" id="new-list-button">Create New List</button>
+  </ng-container>
+  <h2 class="results-heading">Lists</h2>
+  <ng-container *ngIf="userLists.length > 0; else noLists">
+    <div class="lists-grid">
       <a *ngFor="let list of userLists">
-        <a [routerLink]="['/profile', userId, 'lists', list.id]"><app-user-list [list]="list" ></app-user-list></a>
-        <div *ngIf="isLoggedIn && isMyProfile">
-          <a [routerLink]="['/edit-list', list.id]"><button>Edit</button></a> 
-          <a (click)="openDeleteConfirmationDialog(list.id)"><button >Delete</button></a>
+        <div class="user-list-with-buttons">
+          <a [routerLink]="['/profile', userId, 'lists', list.id]"><app-user-list [list]="list" ></app-user-list></a>
+          <div *ngIf="isLoggedIn && isMyProfile" class="edit-delete-buttons">
+            <a [routerLink]="['/edit-list', list.id]"><button>Edit</button></a> 
+            <a (click)="openDeleteConfirmationDialog(list.id)"><button >Delete</button></a>
+          </div>
         </div>
+        
       </a>
-    </ng-container>
-    <ng-template #noLists>
-      <p>No Lists</p>
-    </ng-template>
-  </section>
+    </div>
+    
+  </ng-container>
+  <ng-template #noLists>
+    <p>No Lists</p>
+  </ng-template>
+</section>
 
   <ng-container *ngIf="deleteConfirmationVisible">
     <app-delete-confirmation (confirmed)="onDeleteConfirmed($event)"></app-delete-confirmation>
