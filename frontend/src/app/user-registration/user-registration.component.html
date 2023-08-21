@@ -1,7 +1,12 @@
-<h2>User Registration</h2>
-<form form [formGroup]="registrationForm" (submit)="registerUser()">
-  <input type="text" placeholder="Username" formControlName="username" name="username" required>
-  <input type="password" placeholder="Password" formControlName="password" name="password" required>
-  <input type="password" placeholder="Confirm Password" formControlName="confirmPassword" name="confirmPassword" required>
-  <button type="submit">Register</button>
-</form>
+<body>
+  <div class="user-reg-div">
+    <h2>User Registration</h2>
+    <form form [formGroup]="registrationForm" (submit)="registerUser()" class="reg-form">
+      <input type="text" placeholder="Username" formControlName="username" name="username" required>
+      <input type="password" placeholder="Password" formControlName="password" name="password" required>
+      <input type="password" placeholder="Confirm Password" formControlName="confirmPassword" name="confirmPassword" required>
+      <button type="submit" class="shadow">Register</button>
+    </form>
+  </div>
+</body>
+

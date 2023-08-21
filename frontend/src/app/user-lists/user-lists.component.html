@@ -15,8 +15,8 @@
         <div class="user-list-with-buttons">
           <a [routerLink]="['/profile', userId, 'lists', list.id]"><app-user-list [list]="list" ></app-user-list></a>
           <div *ngIf="isLoggedIn && isMyProfile" class="edit-delete-buttons">
-            <a [routerLink]="['/edit-list', list.id]"><button>Edit</button></a> 
-            <a (click)="openDeleteConfirmationDialog(list.id)"><button >Delete</button></a>
+            <a [routerLink]="['/edit-list', list.id]"><button class="shadow">Edit</button></a> 
+            <a (click)="openDeleteConfirmationDialog(list.id)"><button class="shadow">Delete</button></a>
           </div>
         </div>
         

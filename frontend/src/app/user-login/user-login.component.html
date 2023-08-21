@@ -1,7 +1,13 @@
-<h2>User Login</h2>
-<form form [formGroup]="loginForm" (submit)="loginUser()">
-  <input type="text" placeholder="Username" formControlName="username" name="username" required>
-  <input type="password" placeholder="Password" formControlName="password" name="password" required>
-  <button type="submit">Login</button>
-  <p>Haven't signed up yet?<button type ="submit" [routerLink]="['/register']">Register Here</button></p>
-</form>
+<body>
+  <div class="user-login-div">
+    <h2>User Login</h2>
+    <form form [formGroup]="loginForm" (submit)="loginUser()" class="login-form">
+      <input type="text" placeholder="Username" formControlName="username" name="username" required>
+      <input type="password" placeholder="Password" formControlName="password" name="password" required>
+      <button type="submit" class="shadow" id="login-button">Login</button>
+      <p>Haven't signed up yet? <button type ="submit" [routerLink]="['/register']" id="register-button">Register Here</button></p>
+    </form>
+  </div>
+</body>
+
+
