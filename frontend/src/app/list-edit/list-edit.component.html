@@ -8,22 +8,28 @@
   
       <label for="movieSearch">Add Movies:</label>
       <input type="text" id="movieSearch" name="movieSearch" [(ngModel)]="searchQuery" placeholder="Search for movies" (input)="onMovieSearch()">
-  
-      <!-- Display search results -->
-      <div class="results">
-        <a *ngFor="let movie of searchResults" (click)="onMovieSelect(movie)">
-          <app-movie [movie]="movie"></app-movie>
-        </a>
-      </div>
+      
+      <ng-container *ngIf="searchResults.length>0">
+        <div class="results">
+          <div class="movies-grid">
+            <a *ngFor="let movie of searchResults" (click)="onMovieSelect(movie)">
+              <app-movie [movie]="movie"></app-movie>
+            </a>
+          </div>
+        </div>
+      </ng-container>
+
 
       
   
       <!-- Display selected movies -->
       <div class="results">
-        <a *ngFor="let movie of selectedMovies">
-          <app-movie [movie]="movie"></app-movie>
-          <button (click)="removeSelectedMovie(movie)">Remove</button>
-        </a>
+        <div class="movies-grid">
+          <a *ngFor="let movie of selectedMovies">
+            <app-movie [movie]="movie"></app-movie>
+            <button (click)="removeSelectedMovie(movie)">Remove</button>
+          </a>
+        </div>
       </div>
 
      

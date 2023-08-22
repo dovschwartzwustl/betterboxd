@@ -1,11 +1,15 @@
 /* list-creation.component.css */
 .list-creation-container {
-    max-width: 600px;
+    max-width: 65%;
     margin: 0 auto;
     padding: 20px;
     background-color: #f7f7f7;
     border-radius: 8px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .movies-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   }
   
   h2 {

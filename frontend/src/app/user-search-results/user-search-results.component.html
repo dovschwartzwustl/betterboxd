@@ -1,6 +1,10 @@
-<h1>Search Results for {{query}}</h1>
-<section class="user-results">
+
+<section class="results">
+  <h1>Search Results for {{query}}</h1>
+  <div class="users-grid">
     <a *ngFor="let user of searchResults" [routerLink]="['/profile', user.id]">
       <app-user [user]="user"></app-user>
     </a>
+  </div>
+    
   </section>

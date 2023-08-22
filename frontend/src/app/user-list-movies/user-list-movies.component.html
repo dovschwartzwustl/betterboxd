@@ -1,13 +1,17 @@
-<h2>{{listInfo.name}}</h2>
 
-<div *ngIf="isLoggedIn && isMyProfile">
-  <a [routerLink]="['/edit-list', listId]"><button [routerLink]="['/edit-list', listId]">Edit</button></a>
-</div>
+
 
 <section class="results" *ngIf="movies.length > 0; else noMovies">
+  <ng-container *ngIf="isLoggedIn && isMyProfile">
+    <button [routerLink]="['/edit-list', listId]" class="primary" id="edit-list-button">Edit</button>
+  </ng-container>
+  <h2>{{listInfo.name}}</h2>
+  <div class="movies-grid">
     <a *ngFor="let movie of movies" [routerLink]="['/movie', movie.id]">
       <app-movie [movie]="movie"></app-movie>
     </a>
+  </div>
+    
 </section>
 <ng-template #noMovies>
     <p>No movies in list yet</p>
