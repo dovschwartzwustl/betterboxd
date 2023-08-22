@@ -1,17 +1,19 @@
-<div class="movie-details-modal centered-modal">
-    <div class="modal-content">
-    <!-- Your modal content here -->
-    <h2>Add Movie to List</h2>
+<div class="movie-details-modal">
+  <div class="modal-content">
     
-    <div class="user-list-grid">
+    <h2>Add Movie to List</h2>
+    <div class="lists-grid">
+      
       <a *ngFor="let list of userLists" [class.selected]="selectedListId === list.id">
         <app-user-list [list]="list" (listSelected)="onListSelected($event)" [isSelectedInput]="selectedListId === list.id"></app-user-list>
-    </a>  
+      </a>  
     </div>
-    <button (click)="onAddMovieToList()">Add</button>
+    
+    
+    <button (click)="onAddMovieToList()" class="shadow">Add</button>
     <p>or</p>
     <input type="text" [(ngModel)]="newListName" placeholder="Enter new list name">
-    <button (click)="onCreateNewListWithMovie()">Create and Add</button>
-    <button (click)="onClose()">Close</button>
-    </div>
+    <button (click)="onCreateNewListWithMovie()" class="shadow">Create and Add</button>
+    <button (click)="onClose()" class="shadow">Close</button>
+  </div>
 </div>

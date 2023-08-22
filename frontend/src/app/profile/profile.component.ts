@@ -81,6 +81,7 @@ export class ProfileComponent implements OnInit {
       this.UsersService.getUsernameFromId(this.userId).subscribe({
         next: (response) => {
           this.username = response.username;
+          console.log("got username: "+ this.username);
         },
         error: (error) => {
           console.error('Error fetching username:', error);

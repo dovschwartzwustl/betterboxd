@@ -20,6 +20,9 @@ export class AuthService {
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
     const isLoggedIn = !!localStorage.getItem('authToken');
     this.isLoggedInSubject.next(isLoggedIn);
+
+    const token = this.getToken();
+    this.tokenSubject.next(token);
   }
 
   loginUser(username: string, password: string): Observable<any> {
