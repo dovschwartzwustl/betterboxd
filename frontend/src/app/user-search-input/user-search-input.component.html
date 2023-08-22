@@ -1,5 +1,5 @@
 <form class="search-form">
-    <input type="text" name="searchField" [(ngModel)]="query" placeholder="Find a user" class="search-input">   
+    <input type="text" name="searchField" [(ngModel)]="query" placeholder="Find a user" class="search-input" (keyup)="onSearchEnter($event)">   
     <a [routerLink]="['/usersearch', query]" class="search-button">
       <button class="primary" type="button">Search</button>
     </a>
