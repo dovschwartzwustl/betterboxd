@@ -1,5 +1,12 @@
 .header {
-    margin: 20px;
+    margin-left: 50px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    *{
+        margin-left: 0px;
+    }
 }
 .tabs {
     column-gap: 14px;
@@ -8,14 +15,14 @@
     justify-content: space-around;
     align-items: flex-start;
     padding: 20px;
+    padding-left:0px;
     *{
-        margin: 5px;
+        margin-right: 5px;
     }
 }
 
 #username {
     font-size: 50px;
-    margin-left: 20px;
 }
 
 .tabs a button.active {
