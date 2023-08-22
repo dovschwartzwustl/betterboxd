@@ -12,4 +12,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class UserSearchInputComponent {
   query: string = '';
+
+
 }

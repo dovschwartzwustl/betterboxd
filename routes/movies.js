@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const fetch = require('node-fetch');
 
+
 async function fetchPopularMovies(req, res) {
   const url = 'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1';
   const options = {
@@ -42,6 +43,7 @@ async function fetchMovieDetails(req, res) {
     return res.status(500).json({ message: 'Internal server error' });
   }
 }
+
 
 async function fetchMovieSearchResults(req, res) {
   const query = req.params.query;
