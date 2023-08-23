@@ -1,1 +1,1 @@
-Letterboxd clone using Node.js, Angular, MySQL and MovieDB API
+BetterBoxd: Letterboxd-inspired website using Node.js, Angular, MySQL and MovieDB API
